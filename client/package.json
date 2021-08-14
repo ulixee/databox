@@ -1,0 +1,20 @@
+{
+  "name": "@ulixee/databox",
+  "version": "1.5.4",
+  "description": "The client interface for Databox",
+  "exports": {
+    "import": "./index.mjs",
+    "require": "./index.cjs"
+  },
+  "dependencies": {
+    "@ulixee/databox-interfaces": "1.5.4",
+    "@ulixee/commons": "1.5.5",
+    "@ulixee/hero-interfaces": "1.5.4",
+    "uuid": "^8.3.2",
+    "ws": "^7.4.4"
+  },
+  "devDependencies": {
+    "@ulixee/databox-testing": "1.5.4",
+    "@ulixee/hero": "1.5.4"
+  }
+}

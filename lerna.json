@@ -1,0 +1,6 @@
+{
+  "version": "1.5.4",
+  "npmClient": "yarn",
+  "packages": ["client", "core", "fullstack", "interfaces"],
+  "useWorkspaces": true
+}
