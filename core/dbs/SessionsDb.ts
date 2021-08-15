@@ -1,6 +1,7 @@
 import * as Database from 'better-sqlite3';
 import { Database as SqliteDatabase } from 'better-sqlite3';
 import SessionsTable from '../models/SessionsTable';
+import Core from '../index';
 
 interface IDbOptions {
   readonly?: boolean;
@@ -18,16 +19,14 @@ interface IRelatedSession {
 }
 
 export default class SessionsDb {
-  private static dbByBaseDir: { [dir: string]: SessionsDb } = {};
+  private static instance: SessionsDb;
   public readonly sessions: SessionsTable;
   public readonly readonly: boolean;
-  private readonly databaseDir: string;
   private db: SqliteDatabase;
 
-  constructor(databaseDir: string, dbOptions: IDbOptions = {}) {
+  constructor(dbOptions: IDbOptions = {}) {
     const { readonly = false, fileMustExist = false } = dbOptions;
-    this.db = new Database(`${databaseDir}/databox-instances.db`, { readonly, fileMustExist });
-    this.databaseDir = databaseDir;
+    this.db = new Database(SessionsDb.databasePath, { readonly, fileMustExist });
     this.readonly = readonly;
     this.sessions = new SessionsTable(this.db);
   }
@@ -85,20 +84,24 @@ export default class SessionsDb {
       this.db.close();
     }
     this.db = null;
-    delete SessionsDb.dbByBaseDir[this.databaseDir];
+    SessionsDb.instance = undefined;
   }
 
   public static shutdown(): void {
-    for (const [key, db] of Object.entries(SessionsDb.dbByBaseDir)) {
-      db.close();
-      delete SessionsDb.dbByBaseDir[key];
-    }
+    SessionsDb.instance?.close();
+    SessionsDb.instance = undefined;
   }
 
-  public static find(baseDir: string): SessionsDb {
-    if (!this.dbByBaseDir[baseDir]) {
-      this.dbByBaseDir[baseDir] = new SessionsDb(baseDir);
-    }
-    return this.dbByBaseDir[baseDir];
+  public static find(): SessionsDb {
+    SessionsDb.instance = SessionsDb.instance || new SessionsDb();
+    return SessionsDb.instance;
+  }
+
+  public static get databaseDir(): string {
+    return Core.dataDir;
+  }
+
+  public static get databasePath(): string {
+    return `${this.databaseDir}/databox-instances.db`;
   }
 }

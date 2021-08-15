@@ -232,7 +232,6 @@ export default class ConnectionToClient extends TypedEventEmitter<{
   private getSessionMeta(session: Session): ISessionMeta {
     return {
       sessionId: session.id,
-      sessionsDataLocation: session.databaseDir,
     };
   }
 

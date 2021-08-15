@@ -34,9 +34,7 @@ export default class Session extends TypedEventEmitter<{
     this.id = uuidv1();
     Session.byId[this.id] = this;
     this.logger = log.createChild(module, { sessionId: this.id });
-    this.databaseDir = Core.databaseDir;
     this.sessionState = new SessionState(
-      this.databaseDir,
       this.id,
       options.scriptInstanceMeta,
     );

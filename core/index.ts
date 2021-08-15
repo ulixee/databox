@@ -10,7 +10,7 @@ import GlobalPool from './lib/GlobalPool';
 import Signals = NodeJS.Signals;
 
 const { log } = Log(module);
-let databaseDir = process.env.DATABOX_DATABASE_DIR || Path.join(Os.tmpdir(), '.ulixee'); // transferred to GlobalPool below class definition
+let dataDir = process.env.DATABOX_DATA_DIR || Path.join(Os.tmpdir(), '.ulixee'); // transferred to GlobalPool below class definition
 
 export { GlobalPool, Session };
 
@@ -57,8 +57,8 @@ export default class Core {
     if (localProxyPortStart !== undefined)
       GlobalPool.localProxyPortStart = options.localProxyPortStart;
 
-    if (options.databaseDir !== undefined) {
-      this.databaseDir = options.databaseDir;
+    if (options.dataDir !== undefined) {
+      this.dataDir = options.dataDir;
     }
 
     await GlobalPool.start();
@@ -66,7 +66,7 @@ export default class Core {
     log.info('Core started', {
       sessionId: null,
       parentLogId: startLogId,
-      databaseDir: this.databaseDir,
+      dataDir: this.dataDir,
     });
   }
 
@@ -120,16 +120,16 @@ export default class Core {
     });
   }
 
-  public static get databaseDir(): string {
-    return databaseDir;
+  public static get dataDir(): string {
+    return dataDir;
   }
 
-  public static set databaseDir(dir: string) {
+  public static set dataDir(dir: string) {
     const absoluteDir = Path.isAbsolute(dir) ? dir : Path.join(process.cwd(), dir);
     if (!Fs.existsSync(`${absoluteDir}`)) {
       Fs.mkdirSync(`${absoluteDir}`, { recursive: true });
     }
-    databaseDir = absoluteDir;
+    dataDir = absoluteDir;
   }
 }
 

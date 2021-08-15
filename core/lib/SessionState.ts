@@ -22,13 +22,11 @@ export default class SessionState {
 
   private readonly logger: IBoundLog;
 
-  private readonly databaseDir: string;
   private closeDate?: Date;
 
   private isClosing = false;
 
   constructor(
-    databaseDir: string,
     sessionId: string,
     scriptInstanceMeta: IScriptInstanceMeta,
   ) {
@@ -39,12 +37,11 @@ export default class SessionState {
     });
     SessionState.registry.set(sessionId, this);
 
-    fs.mkdirSync(databaseDir, { recursive: true });
-
-    this.db = new SessionDb(databaseDir, sessionId);
-    this.databaseDir = databaseDir;
+    fs.mkdirSync(SessionDb.databaseDir, { recursive: true });
+    this.db = new SessionDb(sessionId);
     if (scriptInstanceMeta) {
-      const sessionsDb = SessionsDb.find(databaseDir);
+      fs.mkdirSync(SessionsDb.databaseDir, { recursive: true });
+      const sessionsDb = SessionsDb.find();
       const sessionsTable = sessionsDb.sessions;
       sessionsTable.insert(
         sessionId,

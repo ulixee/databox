@@ -13,7 +13,7 @@ class MockedConnectionToCore extends ConnectionToCore {
     async ({ command }: ICoreRequestPayload): Promise<ICoreResponsePayload> => {
       if (command === 'Session.create') {
         return {
-          data: { sessionId: 'session-id', sessionsDataLocation: '' },
+          data: { sessionId: 'session-id' },
         };
       }
     },

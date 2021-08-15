@@ -9,16 +9,14 @@ export default class CoreSession {
   #lastExternalId = 0;
 
   public sessionId: string;
-  public sessionsDataLocation: string;
   public commandQueue: CoreCommandQueue;
 
   protected readonly meta: ISessionMeta;
   private readonly connectionToCore: ConnectionToCore;
 
   constructor(sessionMeta: ISessionMeta, connectionToCore: ConnectionToCore) {
-    const { sessionId, sessionsDataLocation } = sessionMeta;
+    const { sessionId } = sessionMeta;
     this.sessionId = sessionId;
-    this.sessionsDataLocation = sessionsDataLocation;
     this.meta = {
       sessionId,
     };

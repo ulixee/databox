@@ -7,6 +7,7 @@ import SessionTable from '../models/SessionTable';
 import SessionsDb from './SessionsDb';
 import SessionState from '../lib/SessionState';
 import OutputTable from '../models/OutputTable';
+import Core from '../index';
 
 const { log } = Log(module);
 
@@ -32,10 +33,10 @@ export default class SessionDb {
   private db: SqliteDatabase;
   private readonly tables: SqliteTable<any>[] = [];
 
-  constructor(baseDir: string, id: string, dbOptions: IDbOptions = {}) {
+  constructor(id: string, dbOptions: IDbOptions = {}) {
     const { readonly = false, fileMustExist = false } = dbOptions;
     this.sessionId = id;
-    this.db = new Database(`${baseDir}/databox-instance-${id}.db`, { readonly, fileMustExist });
+    this.db = new Database(`${SessionDb.databaseDir}/${id}.db`, { readonly, fileMustExist });
     if (!readonly) {
       this.saveInterval = setInterval(this.flush.bind(this), 5e3).unref();
     }
@@ -95,11 +96,11 @@ export default class SessionDb {
     for (const table of this.tables) table.unsubscribe();
   }
 
-  public static getCached(sessionId: string, basePath: string, fileMustExist = false): SessionDb {
+  public static getCached(sessionId: string, fileMustExist = false): SessionDb {
     if (!this.byId.get(sessionId)?.db?.open) {
       this.byId.set(
         sessionId,
-        new SessionDb(basePath, sessionId, {
+        new SessionDb(sessionId, {
           readonly: true,
           fileMustExist,
         }),
@@ -109,38 +110,34 @@ export default class SessionDb {
   }
 
   public static findWithRelated(scriptArgs: ISessionLookupArgs): ISessionLookup {
-    let { dataLocation, sessionId } = scriptArgs;
-
-    const ext = Path.extname(dataLocation);
-    if (ext === '.db') {
-      sessionId = Path.basename(dataLocation, ext);
-      dataLocation = Path.dirname(dataLocation);
-    }
+    let { sessionId } = scriptArgs;
 
     // NOTE: don't close db - it's from a shared cache
-    const sessionsDb = SessionsDb.find(dataLocation);
+    const sessionsDb = SessionsDb.find();
     if (!sessionId) {
       sessionId = sessionsDb.findLatestSessionId(scriptArgs);
       if (!sessionId) return null;
     }
 
     const activeSession = SessionState.registry.get(sessionId);
-    const sessionDb = activeSession?.db ?? this.getCached(sessionId, dataLocation, true);
+    const sessionDb = activeSession?.db ?? this.getCached(sessionId, true);
     const session = sessionDb.session.get();
     const related = sessionsDb.findRelatedSessions(session);
 
     return {
       ...related,
-      dataLocation,
       sessionDb,
       sessionState: activeSession,
     };
+  }
+
+  public static get databaseDir(): string {
+    return `${Core.dataDir}/databox-instances`;
   }
 }
 
 export interface ISessionLookup {
   sessionDb: SessionDb;
-  dataLocation: string;
   sessionState: SessionState;
   relatedSessions: { id: string }[];
   relatedScriptInstances: { id: string; startDate: number; defaultSessionId: string }[];
@@ -150,6 +147,5 @@ export interface ISessionLookupArgs {
   scriptInstanceId: string;
   sessionName: string;
   scriptEntrypoint: string;
-  dataLocation: string;
   sessionId: string;
 }

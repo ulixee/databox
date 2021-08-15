@@ -12,7 +12,7 @@ class MockedConnectionToDataboxCore extends ConnectionToDataboxCore {
     async ({ command }: ICoreRequestPayload): Promise<ICoreResponsePayload> => {
       if (command === 'Session.create') {
         return {
-          data: { sessionId: 'session-id', sessionsDataLocation: '' },
+          data: { sessionId: 'session-id' },
         };
       }
     },
@@ -36,7 +36,7 @@ class MockedConnectionToHeroCore extends ConnectionToHeroCore {
     async ({ command }: ICoreRequestPayload): Promise<ICoreResponsePayload> => {
       if (command === 'Session.create') {
         return {
-          data: { sessionId: 'session-id', sessionsDataLocation: '' },
+          data: { sessionId: 'session-id' },
         };
       }
     },

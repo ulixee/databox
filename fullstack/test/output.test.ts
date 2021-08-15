@@ -25,7 +25,7 @@ describe('Output tests', () => {
     const sessionId = await databox.sessionId;
     await databox.close();
 
-    const db = new SessionDb(Core.databaseDir, sessionId, { readonly: true });
+    const db = new SessionDb(sessionId, { readonly: true });
     const outputs = db.output.all();
     expect(outputs).toHaveLength(3);
     expect(outputs[0]).toEqual({
@@ -78,7 +78,7 @@ describe('Output tests', () => {
     const sessionId = await databox.sessionId;
     await databox.close();
 
-    const db = new SessionDb(Core.databaseDir, sessionId, { readonly: true });
+    const db = new SessionDb(sessionId, { readonly: true });
     const outputs = db.output.all();
     expect(outputs).toHaveLength(1);
     expect(outputs[0]).toEqual({
@@ -118,7 +118,7 @@ describe('Output tests', () => {
     const sessionId = await databox.sessionId;
     await databox.close();
 
-    const db = new SessionDb(Core.databaseDir, sessionId, { readonly: true });
+    const db = new SessionDb(sessionId, { readonly: true });
     const outputs = db.output.all();
     expect(outputs).toHaveLength(4);
     expect(outputs[0]).toEqual({
@@ -151,7 +151,7 @@ describe('Output tests', () => {
     const sessionId = await databox.sessionId;
     await databox.close();
 
-    const db = new SessionDb(Core.databaseDir, sessionId, { readonly: true });
+    const db = new SessionDb(sessionId, { readonly: true });
     const outputs = db.output.all();
     expect(outputs).toHaveLength(4);
     expect(outputs[0]).toEqual({
