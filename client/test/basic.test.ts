@@ -1,10 +1,9 @@
 import ICoreRequestPayload from '@ulixee/databox-interfaces/ICoreRequestPayload';
 import ICoreResponsePayload from '@ulixee/databox-interfaces/ICoreResponsePayload';
 import { Helpers } from '@ulixee/databox-testing';
-import DataboxPackage from '../index';
+import PackagedDatabox from '../index';
 import ConnectionToCore from '../connections/ConnectionToCore';
 import readCommandLineArgs from '../lib/utils/readCommandLineArgs';
-import IConnectionToCoreOptions from '../interfaces/IConnectionToCoreOptions';
 
 afterAll(Helpers.afterAll);
 
@@ -35,22 +34,22 @@ class MockedConnectionToCore extends ConnectionToCore {
 describe('basic Databox tests', () => {
   it('automatically runs and closes a databox', async () => {
     let connectionToCore: MockedConnectionToCore;
-    class CustomDataboxPackage extends DataboxPackage {
+    class CustomPackagedDatabox extends PackagedDatabox {
       createConnectionToCoreFn() {
         connectionToCore = new MockedConnectionToCore();
         return connectionToCore;
       }
     }
 
-    let databoxPackage;
+    let packagedDatabox;
     const ranScript = await new Promise(resolve => {
       // eslint-disable-next-line no-new
-      databoxPackage = new CustomDataboxPackage(() => resolve(true));
+      packagedDatabox = new CustomPackagedDatabox(() => resolve(true));
     });
     await new Promise(resolve => process.nextTick(resolve));
     expect(ranScript).toBe(true);
-    expect(databoxPackage.databoxActive.isClosing).toBe(true);
-    await databoxPackage.databoxActive.close();
+    expect(packagedDatabox.runningDatabox.isClosing).toBe(true);
+    await packagedDatabox.runningDatabox.close();
 
     const outgoingCommands = connectionToCore.outgoing.mock.calls;
     expect(outgoingCommands.map(c => c[0].command)).toMatchObject([
@@ -65,8 +64,8 @@ describe('basic Databox tests', () => {
     process.env.DATABOX_RUN_LATER = 'true';
     let ranScript = false;
     const connectionToCore = new MockedConnectionToCore();
-    const databoxPackage = new DataboxPackage(() => { ranScript = true });
-    await databoxPackage.run({ connectionToCore });
+    const packagedDatabox = new PackagedDatabox(() => { ranScript = true });
+    await packagedDatabox.run({ connectionToCore });
     expect(ranScript).toBe(true);
 
     const outgoingCommands = connectionToCore.outgoing.mock.calls;

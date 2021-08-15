@@ -1,10 +1,10 @@
 import IDataboxMeta from '@ulixee/databox-interfaces/IDataboxMeta';
-import IDataboxRunOptions from '../interfaces/IDataboxRunOptions';
+import IDataboxRunOptions from '@ulixee/databox-interfaces/IDataboxRunOptions';
 import Output, { createObservableOutput } from './Output';
 import ConnectionManager from './ConnectionManager';
 import DisconnectedFromCoreError from '../connections/DisconnectedFromCoreError';
 
-export default class DataboxActive {
+export default class RunningDatabox {
   #output: Output;
   #connectionManager: ConnectionManager;
   #isClosing: Promise<void>;

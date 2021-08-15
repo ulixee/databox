@@ -1,4 +1,4 @@
-import DataboxActive from '../DataboxActive';
+import RunningDatabox from '../RunningDatabox';
 
 // This is our integration hook between Hero and Databox
 
@@ -15,7 +15,7 @@ if (Hero) {
   Hero.on('new', (hero: typeof Hero, options: any) => {
     const possibleDatabox = options.databox || options;
     delete options.databox;
-    const databox: any = possibleDatabox?.constructor.name === DataboxActive.name ? possibleDatabox : null;
+    const databox: any = possibleDatabox?.constructor.name === RunningDatabox.name ? possibleDatabox : null;
     if (!databox) return;
 
     if (!options.connectionToCore) {

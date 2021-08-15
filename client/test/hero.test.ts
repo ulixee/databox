@@ -2,7 +2,7 @@ import Hero, { ConnectionToCore as ConnectionToHeroCore } from '@ulixee/hero';
 import ICoreRequestPayload from '@ulixee/databox-interfaces/ICoreRequestPayload';
 import ICoreResponsePayload from '@ulixee/databox-interfaces/ICoreResponsePayload';
 import { Helpers } from '@ulixee/databox-testing';
-import DataboxPackage from '../index';
+import PackagedDatabox from '../index';
 import ConnectionToDataboxCore from '../connections/ConnectionToCore';
 
 afterAll(Helpers.afterAll);
@@ -61,13 +61,13 @@ describe('basic Databox+Hero tests', () => {
     let lastExternalId = 0;
     const connectionToDataboxCore = new MockedConnectionToDataboxCore();
     const connectionToHeroCore = new MockedConnectionToHeroCore();
-    const databoxPackage = new DataboxPackage(async databox => {
+    const packagedDatabox = new PackagedDatabox(async databox => {
       const hero = new Hero({ databox, connectionToCore: connectionToHeroCore });
       await hero.goto('https://news.ycombinator.org');
       await hero.close();
       lastExternalId = databox.lastExternalId;
     });
-    await databoxPackage.run({ connectionToCore: connectionToDataboxCore });
+    await packagedDatabox.run({ connectionToCore: connectionToDataboxCore });
     expect(lastExternalId).toBe(2);
 
     const outgoingDataboxCommands = connectionToDataboxCore.outgoing.mock.calls;

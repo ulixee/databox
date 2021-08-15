@@ -1,7 +1,7 @@
 import '@ulixee/commons/lib/SourceMapSupport';
 import Core from '@ulixee/databox-core';
 import ShutdownHandler from '@ulixee/commons/lib/ShutdownHandler';
-import DataboxPackage from './lib/DataboxPackage';
+import PackagedDatabox from './lib/PackagedDatabox';
 
 ShutdownHandler.exitOnSignal = false;
 
@@ -13,4 +13,4 @@ export {
   Core,
 };
 
-export default DataboxPackage;
+export default PackagedDatabox;

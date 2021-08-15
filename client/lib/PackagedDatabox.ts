@@ -1,15 +1,16 @@
+import IDataboxRunOptions from '@ulixee/databox-interfaces/IDataboxRunOptions';
+import IPackagedDatabox from '@ulixee/databox-interfaces/IPackagedDatabox';
 import './utils/heroHook';
 import readCommandLineArgs from './utils/readCommandLineArgs';
-import DataboxActive from './DataboxActive';
+import RunningDatabox from './RunningDatabox';
 import IComponents, { IScriptFn } from '../interfaces/IComponents';
 import ConnectionManager from './ConnectionManager';
-import IDataboxRunOptions from '../interfaces/IDataboxRunOptions';
 import { ICreateConnectionToCoreFn } from '../connections/ConnectionFactory';
 import loadUlixeeConfig from './utils/loadUlixeeConfig';
 
-export default class DataboxPackage {
+export default class PackagedDatabox implements IPackagedDatabox {
   public static createConnectionToCoreFn: ICreateConnectionToCoreFn;
-  public databoxActive: DataboxActive;
+  public runningDatabox: RunningDatabox;
 
   #components: IComponents;
 
@@ -33,21 +34,21 @@ export default class DataboxPackage {
   }
 
   public async run(options: IDataboxRunOptions = {}): Promise<void> {
-    const { createDataboxActive } = this.constructor as any
-    this.databoxActive = await createDataboxActive.call(this, options);
-    await this.#components.scriptFn(this.databoxActive);
-    await this.databoxActive.close();
-    this.databoxActive = undefined;
+    const { createRunningDatabox } = this.constructor as any
+    this.runningDatabox = await createRunningDatabox.call(this, options);
+    await this.#components.scriptFn(this.runningDatabox);
+    await this.runningDatabox.close();
+    this.runningDatabox = undefined;
   }
 
-  public static createDataboxActive(options: IDataboxRunOptions = {}): Promise<DataboxActive> {
-    return new Promise<DataboxActive>(async (resolve, reject) => {
+  public static createRunningDatabox(options: IDataboxRunOptions = {}): Promise<RunningDatabox> {
+    return new Promise<RunningDatabox>(async (resolve, reject) => {
       try {
         const createConnectionToCoreFn = this.createConnectionToCoreFn;
         const connectionManager = new ConnectionManager({ createConnectionToCoreFn, ...options });
         await connectionManager.getConnectedCoreSessionOrReject();
         process.nextTick(() => {
-          resolve(new DataboxActive(connectionManager, options));
+          resolve(new RunningDatabox(connectionManager, options));
         });
       } catch (error) {
         reject(error);

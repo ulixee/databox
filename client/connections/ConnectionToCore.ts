@@ -11,7 +11,7 @@ import { TypedEventEmitter } from '@ulixee/commons/lib/eventUtils';
 import SessionClosedOrMissingError from '@ulixee/commons/lib/SessionClosedOrMissingError';
 import Resolvable from '@ulixee/commons/lib/Resolvable';
 import ICoreConnectionEventPayload from '@ulixee/databox-interfaces/ICoreConnectionEventPayload';
-import IConnectionToCoreOptions from '../interfaces/IConnectionToCoreOptions';
+import IConnectionToCoreOptions from '@ulixee/databox-interfaces/IConnectionToCoreOptions';
 import CoreCommandQueue from '../lib/CoreCommandQueue';
 import CoreSession from '../lib/CoreSession';
 import CoreSessions from '../lib/CoreSessions';

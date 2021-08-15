@@ -1,8 +1,8 @@
 import { CanceledPromiseError } from '@ulixee/commons/interfaces/IPendingWaitEvent';
-import DataboxPackage from '@ulixee/databox/lib/DataboxPackage';
-import DataboxActive from '@ulixee/databox/lib/DataboxActive';
-import IDataboxRunOptions from '@ulixee/databox/interfaces/IDataboxRunOptions';
-import FullstackDataboxPackage from '@ulixee/databox-fullstack';
+import PackagedDatabox from '@ulixee/databox/lib/PackagedDatabox';
+import RunningDatabox from '@ulixee/databox/lib/RunningDatabox';
+import IDataboxRunOptions from '@ulixee/databox-interfaces/IDataboxRunOptions';
+import FullstackPackagedDatabox from '@ulixee/databox-fullstack';
 
 export const needsClosing: { close: () => Promise<any> | void; onlyCloseOnFinal?: boolean }[] = [];
 
@@ -41,14 +41,14 @@ async function closeAll(isFinal = false): Promise<void> {
   );
 }
 
-export async function createClientDatabox(options: IDataboxRunOptions = {}): Promise<DataboxActive> {
-  const databox = await DataboxPackage.createDataboxActive(options);
+export async function createClientDatabox(options: IDataboxRunOptions = {}): Promise<RunningDatabox> {
+  const databox = await PackagedDatabox.createRunningDatabox(options);
   needsClosing.push(databox);
   return databox;
 }
 
-export async function createFullstackDatabox(options: IDataboxRunOptions = {}): Promise<DataboxActive> {
-  const databox = await FullstackDataboxPackage.createDataboxActive(options);
+export async function createFullstackDatabox(options: IDataboxRunOptions = {}): Promise<RunningDatabox> {
+  const databox = await FullstackPackagedDatabox.createRunningDatabox(options);
   needsClosing.push(databox);
   return databox;
 }

@@ -1,8 +1,8 @@
 import ISessionCreateOptions from '@ulixee/databox-interfaces/ISessionCreateOptions';
+import IDataboxRunOptions from '@ulixee/databox-interfaces/IDataboxRunOptions';
 import ConnectionToCore from '../connections/ConnectionToCore';
 import CoreSession from './CoreSession';
 import ConnectionFactory, { ICreateConnectionToCoreFn } from '../connections/ConnectionFactory';
-import IDataboxRunOptions from '../interfaces/IDataboxRunOptions';
 
 type IStateOptions = ISessionCreateOptions & Pick<IDataboxRunOptions, 'connectionToCore'> & {
   createConnectionToCoreFn?: ICreateConnectionToCoreFn;

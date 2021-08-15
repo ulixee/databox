@@ -4,8 +4,8 @@ import TypeSerializer from '@ulixee/commons/lib/TypeSerializer';
 import { createPromise } from '@ulixee/commons/lib/utils';
 import IResolvablePromise from '@ulixee/commons/interfaces/IResolvablePromise';
 import { CanceledPromiseError } from '@ulixee/commons/interfaces/IPendingWaitEvent';
+import IConnectionToCoreOptions from '@ulixee/databox-interfaces/IConnectionToCoreOptions';
 import ConnectionToCore from './ConnectionToCore';
-import IConnectionToCoreOptions from '../interfaces/IConnectionToCoreOptions';
 import DisconnectedFromCoreError from './DisconnectedFromCoreError';
 
 export default class ConnectionToRemoteCoreServer extends ConnectionToCore {

@@ -1,4 +1,4 @@
-import ICoreConfigureOptions from '@ulixee/databox-interfaces/ICoreConfigureOptions';
+import ICoreConfigureOptions from './ICoreConfigureOptions';
 
 export default interface IConnectionToCoreOptions
   extends Omit<ICoreConfigureOptions, 'maxConcurrentClientCount'> {

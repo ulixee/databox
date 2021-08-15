@@ -1,8 +1,8 @@
-import DataboxActive from '../lib/DataboxActive';
+import RunningDatabox from '../lib/RunningDatabox';
 
 export default interface IComponents {
   scriptFn: IScriptFn;
   schema?: any;
 }
 
-export type IScriptFn = (databox: DataboxActive) => void | Promise<void>;
+export type IScriptFn = (databox: RunningDatabox) => void | Promise<void>;

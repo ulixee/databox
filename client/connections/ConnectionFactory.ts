@@ -1,5 +1,6 @@
 import Log from '@ulixee/commons/lib/Logger';
-import IConnectionToCoreOptions from '../interfaces/IConnectionToCoreOptions';
+import IConnectionToCoreOptions from '@ulixee/databox-interfaces/IConnectionToCoreOptions';
+import IConnectionToCore from '@ulixee/databox-interfaces/IConnectionToCore';
 import ConnectionToCore from './ConnectionToCore';
 import ConnectionToRemoteCoreServer from './ConnectionToRemoteCoreServer';
 
@@ -10,7 +11,7 @@ export type ICreateConnectionToCoreFn = (options: IConnectionToCoreOptions) => C
 export default class ConnectionFactory {
 
   public static createConnection(
-    options: IConnectionToCoreOptions | ConnectionToCore,
+    options: IConnectionToCoreOptions | IConnectionToCore,
     overrideCreateConnectionToCoreFn?: ICreateConnectionToCoreFn,
   ): ConnectionToCore {
     if (options instanceof ConnectionToCore) {
@@ -18,6 +19,7 @@ export default class ConnectionFactory {
       return options;
     }
 
+    options = options as IConnectionToCoreOptions;
     let connection: ConnectionToCore;
     if (overrideCreateConnectionToCoreFn) {
       connection = overrideCreateConnectionToCoreFn(options);
