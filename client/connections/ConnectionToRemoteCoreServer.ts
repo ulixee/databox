@@ -86,7 +86,7 @@ export default class ConnectionToRemoteCoreServer extends ConnectionToCore {
 
 function connectToWebsocketHost(host: string): IResolvablePromise<WebSocket | Error> {
   const resolvable = createPromise<WebSocket | Error>(30e3);
-  const webSocket = new WebSocket(host);
+  const webSocket = new WebSocket(`${host}/databox`);
   function onError(error: Error): void {
     if (error instanceof Error) resolvable.resolve(error);
     else resolvable.resolve(new Error(`Error connecting to Websocket host -> ${error}`));
