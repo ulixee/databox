@@ -1,0 +1,7 @@
+{
+  "name": "@ulixee/databox-examples",
+  "version": "1.5.4",
+  "dependencies": {
+    "@ulixee/hero": "1.5.4"
+  }
+}
