@@ -4,7 +4,6 @@ import { IBoundLog } from '@ulixee/commons/interfaces/ILog';
 import { TypedEventEmitter } from '@ulixee/commons/lib/eventUtils';
 import ISessionCreateOptions from '@ulixee/databox-interfaces/ISessionCreateOptions';
 import SessionState from './SessionState';
-import Core from '../index';
 import { IOutputChangeRecord } from '../models/OutputTable';
 
 const { log } = Log(module);
@@ -34,10 +33,7 @@ export default class Session extends TypedEventEmitter<{
     this.id = uuidv1();
     Session.byId[this.id] = this;
     this.logger = log.createChild(module, { sessionId: this.id });
-    this.sessionState = new SessionState(
-      this.id,
-      options.scriptInstanceMeta,
-    );
+    this.sessionState = new SessionState(this.id, options.scriptInstanceMeta);
     this.sessionState.recordSession({
       sessionOptions: {},
     });

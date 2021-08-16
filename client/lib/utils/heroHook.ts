@@ -1,21 +1,24 @@
+import type Hero from '@ulixee/hero';
+import type IHeroCreateOptions from '@ulixee/hero/interfaces/IHeroCreateOptions';
 import RunningDatabox from '../RunningDatabox';
 
 // This is our integration hook between Hero and Databox
 
-let Hero;
+let HeroConstructor;
 
 try {
   // eslint-disable-next-line global-require,import/no-extraneous-dependencies
-  Hero = require('@ulixee/hero').default;
+  HeroConstructor = require('@ulixee/hero').default;
 } catch (error) {
   // do nothing
 }
 
-if (Hero) {
-  Hero.on('new', (hero: typeof Hero, options: any) => {
-    const possibleDatabox = options.databox || options;
+if (HeroConstructor) {
+  HeroConstructor.on('new', (hero: Hero, options: IHeroCreateOptions) => {
+    const possibleDatabox = options.databox || (options as RunningDatabox);
     delete options.databox;
-    const databox: any = possibleDatabox?.constructor.name === RunningDatabox.name ? possibleDatabox : null;
+    const databox: RunningDatabox =
+      possibleDatabox?.constructor.name === RunningDatabox.name ? possibleDatabox : null;
     if (!databox) return;
 
     if (!options.connectionToCore) {
