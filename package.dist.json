@@ -1,15 +1,6 @@
 {
-  "name": "@ulixee/databox-monorepo",
-  "private": true,
-  "license": "MIT",
   "scripts": {},
   "devDependencies": {
     "lerna": "^3.4.3"
-  },
-  "engines": {
-    "node": ">=13.2.0"
-  },
-  "workspaces": {
-    "packages": ["client", "core", "fullstack", "interfaces", "tools"]
   }
 }

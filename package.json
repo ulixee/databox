@@ -3,9 +3,10 @@
   "private": true,
   "description": "A simple wrapper for data scripts to create composable deployable units",
   "scripts": {
-    "bump-version": "lerna version prerelease --no-push --conventional-commits",
+    "prepare": "husky install",
+    "bump-version": "lerna version --conventional-commits --no-push --exact --force-publish",
     "build": "yarn tsc && cd build && yarn",
-    "build:dist": "shx rm -rf build-dist && tsc -b tsconfig.dist.json && yarn copy:dist && node prepare-dist.js && shx cp package.dist.json build-dist/package.json",
+    "build:dist": "shx rm -rf build-dist && tsc -b tsconfig.dist.json && yarn copy:dist && node prepare-dist.js",
     "build:dist-local": "yarn build:dist && cd build-dist && yarn",
     "build:ci": "yarn tsc && cd build && yarn install",
     "copy:node_modules": "shx cp -r node_modules \"build/node_modules\"",
@@ -32,13 +33,6 @@
   "engines": {
     "node": ">=13.2.0"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "pre-push": "npm test",
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    }
-  },
   "devDependencies": {
     "@commitlint/cli": "^12.0.1",
     "@commitlint/config-conventional": "^12.0.1",
@@ -61,7 +55,7 @@
     "eslint-plugin-promise": "^4.3.1",
     "eslint-plugin-react": "^7.22.0",
     "eslint-plugin-react-hooks": "^4.2.0",
-    "husky": "^4.3.0",
+    "husky": "^7.0.1",
     "jest": "^26.6.3",
     "jest-environment-node": "^26.6.2",
     "jest-summary-reporter": "^0.0.2",
@@ -82,7 +76,8 @@
       "interfaces",
       "testing",
       "tools",
-      "../hero/build/**"
+      "../hero/build/*",
+      "../hero/build/plugins/*"
     ]
   },
   "lint-staged": {

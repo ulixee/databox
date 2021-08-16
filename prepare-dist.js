@@ -50,6 +50,19 @@ function processPackageJson(packagePath) {
     bin: packageJson.bin,
   };
 
+  if (packageJson.private) {
+    if (!packageJson.workspaces) return;
+    finalPackageJson.private = true;
+    finalPackageJson.publishConfig = undefined;
+    finalPackageJson.workspaces = overridesJson.workspaces ?? packageJson.workspaces;
+    finalPackageJson.workspaces.packages = finalPackageJson.workspaces.packages.map(x => {
+      if (x.startsWith('../') && !fs.existsSync(`${buildDistDir}/${x}`)) {
+        return `../${x}`;
+      }
+      return x;
+    });
+  }
+
   // check if index exists
   if (!finalPackageJson.files && !finalPackageJson.main) {
     if (fs.existsSync(`${packagePath}/index.js`)) {
