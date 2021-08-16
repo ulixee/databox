@@ -8,7 +8,7 @@ import RunningDatabox from './lib/RunningDatabox';
 export { Observable, IConnectionToCoreOptions, ConnectionToCore };
 
 declare module '@ulixee/hero' {
-  interface IHeroCreateOptions {
+  export interface IHeroCreateOptions {
     databox?: RunningDatabox;
   }
 }

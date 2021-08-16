@@ -1,6 +1,5 @@
 import * as Database from 'better-sqlite3';
 import { Database as SqliteDatabase, Transaction } from 'better-sqlite3';
-import * as Path from 'path';
 import Log from '@ulixee/commons/lib/Logger';
 import SqliteTable from '@ulixee/commons/lib/SqliteTable';
 import SessionTable from '../models/SessionTable';
@@ -44,10 +43,7 @@ export default class SessionDb {
     this.session = new SessionTable(this.db);
     this.output = new OutputTable(this.db);
 
-    this.tables.push(
-      this.session,
-      this.output,
-    );
+    this.tables.push(this.session, this.output);
 
     if (!readonly) {
       this.batchInsert = this.db.transaction(() => {
