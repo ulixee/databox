@@ -9,6 +9,7 @@ const workspaces =
 
 const copyArgs = [
   '-e "node_modules"',
+  'package*.json',
   'examples/*.js',
   'examples/*.mjs',
   '.*ignore',
