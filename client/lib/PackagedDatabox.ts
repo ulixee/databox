@@ -21,8 +21,8 @@ export default class PackagedDatabox implements IPackagedDatabox {
     }
     if (process.env.DATABOX_RUN_LATER) return;
 
-    const params = readCommandLineArgs();
-    const options: IDataboxRunOptions = { params };
+    const input = readCommandLineArgs();
+    const options: IDataboxRunOptions = { input };
     const ulixeeConfig = loadUlixeeConfig();
     if (ulixeeConfig.serverHost) {
       options.connectionToCore = { host: ulixeeConfig.serverHost };
@@ -37,8 +37,10 @@ export default class PackagedDatabox implements IPackagedDatabox {
     const { createRunningDatabox } = this.constructor as any
     this.runningDatabox = await createRunningDatabox.call(this, options);
     await this.#components.scriptFn(this.runningDatabox);
+    const output = this.runningDatabox.output;
     await this.runningDatabox.close();
     this.runningDatabox = undefined;
+    return output;
   }
 
   public static createRunningDatabox(options: IDataboxRunOptions = {}): Promise<RunningDatabox> {
