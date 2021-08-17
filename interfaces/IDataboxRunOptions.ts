@@ -8,6 +8,6 @@ export default interface IDataboxRunOptions
   > {
   connectionToCore?: IConnectionToCoreOptions | IConnectionToCore;
   action?: string;
-  params?: {};
+  input?: {};
   fields?: {};
 }

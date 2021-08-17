@@ -32,10 +32,13 @@ export default class RunningDatabox {
     return !!this.#isClosing;
   }
 
-  public get input(): { action: string, [key: string]: any } {
-    const action = this.queryOptions.action || '/';
-    const params = this.queryOptions.params || {};
-    return { action, ...params };
+  public get action(): string {
+    return this.queryOptions.action || '/';
+  }
+
+  public get input(): { [key: string]: any } {
+    const input = this.queryOptions.input || {};
+    return { ...input };
   }
 
   public get output(): any | any[] {
