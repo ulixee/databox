@@ -2,9 +2,10 @@ import * as Database from 'better-sqlite3';
 import { Database as SqliteDatabase, Transaction } from 'better-sqlite3';
 import Log from '@ulixee/commons/lib/Logger';
 import SqliteTable from '@ulixee/commons/lib/SqliteTable';
+import * as Fs from 'fs';
+import { existsSync } from 'fs';
 import SessionTable from '../models/SessionTable';
 import SessionsDb from './SessionsDb';
-import SessionState from '../lib/SessionState';
 import OutputTable from '../models/OutputTable';
 import Core from '../index';
 
@@ -17,6 +18,7 @@ interface IDbOptions {
 
 export default class SessionDb {
   private static byId = new Map<string, SessionDb>();
+  private static isDatabaseDirValid = false;
 
   public get readonly(): boolean {
     return this.db?.readonly;
@@ -33,6 +35,8 @@ export default class SessionDb {
   private readonly tables: SqliteTable<any>[] = [];
 
   constructor(id: string, dbOptions: IDbOptions = {}) {
+    SessionDb.start();
+
     const { readonly = false, fileMustExist = false } = dbOptions;
     this.sessionId = id;
     this.db = new Database(`${SessionDb.databaseDir}/${id}.db`, { readonly, fileMustExist });
@@ -115,26 +119,29 @@ export default class SessionDb {
       if (!sessionId) return null;
     }
 
-    const activeSession = SessionState.registry.get(sessionId);
-    const sessionDb = activeSession?.db ?? this.getCached(sessionId, true);
+    const sessionDb = this.getCached(sessionId, true);
     const session = sessionDb.session.get();
     const related = sessionsDb.findRelatedSessions(session);
 
     return {
       ...related,
       sessionDb,
-      sessionState: activeSession,
     };
   }
 
   public static get databaseDir(): string {
     return `${Core.dataDir}/databox-instances`;
   }
+
+  public static start(): void {
+    if (this.isDatabaseDirValid) return;
+    if (!existsSync(this.databaseDir)) Fs.mkdirSync(this.databaseDir, { recursive: true });
+    this.isDatabaseDirValid = true;
+  }
 }
 
 export interface ISessionLookup {
   sessionDb: SessionDb;
-  sessionState: SessionState;
   relatedSessions: { id: string }[];
   relatedScriptInstances: { id: string; startDate: number; defaultSessionId: string }[];
 }

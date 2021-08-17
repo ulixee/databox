@@ -9,7 +9,7 @@ export default class RunningDatabox {
   #connectionManager: ConnectionManager;
   #isClosing: Promise<void>;
 
-  private readonly queryOptions: IDataboxRunOptions;
+  readonly queryOptions: IDataboxRunOptions;
 
   constructor(connectionManager: ConnectionManager, queryOptions: IDataboxRunOptions) {
     this.#connectionManager = connectionManager;
@@ -43,8 +43,8 @@ export default class RunningDatabox {
 
   public get output(): any | any[] {
     if (!this.#output) {
-      const coreSession = this
-        .#connectionManager.getConnectedCoreSessionOrReject()
+      const coreSession = this.#connectionManager
+        .getConnectedCoreSessionOrReject()
         .catch(() => null);
       this.#output = createObservableOutput(coreSession);
     }

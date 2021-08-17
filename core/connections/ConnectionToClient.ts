@@ -69,7 +69,7 @@ export default class ConnectionToClient extends TypedEventEmitter<{
 
       const isChildProcess = !!process.send;
 
-      if ((isChildProcess === false && shouldSkipLogging === false)) {
+      if (isChildProcess === false && shouldSkipLogging === false) {
         log.error('ConnectionToClient.HandleRequestError', {
           error,
           sessionId: meta?.sessionId,
@@ -141,6 +141,7 @@ export default class ConnectionToClient extends TypedEventEmitter<{
   public getDataboxMeta(meta: ISessionMeta): IDataboxMeta {
     const session = Session.get(meta.sessionId);
     return <IDataboxMeta>{
+      input: session.options?.input,
       sessionId: session.id,
     };
   }
@@ -210,7 +211,7 @@ export default class ConnectionToClient extends TypedEventEmitter<{
       }
 
       const session = Session.get(meta.sessionId);
-      session.sessionState.nextCommandMeta = commandMeta;
+      session.nextCommandMeta = commandMeta;
       if (!session) {
         return new SessionClosedOrMissingError(
           `The requested command (${command}) references a session that is closed or invalid.`,

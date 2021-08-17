@@ -3,61 +3,83 @@ import Log from '@ulixee/commons/lib/Logger';
 import { IBoundLog } from '@ulixee/commons/interfaces/ILog';
 import { TypedEventEmitter } from '@ulixee/commons/lib/eventUtils';
 import ISessionCreateOptions from '@ulixee/databox-interfaces/ISessionCreateOptions';
-import SessionState from './SessionState';
 import { IOutputChangeRecord } from '../models/OutputTable';
+import SessionDb from '../dbs/SessionDb';
+import SessionsDb from '../dbs/SessionsDb';
 
 const { log } = Log(module);
 
 export default class Session extends TypedEventEmitter<{
   closing: void;
   closed: void;
+  output: { changes: IOutputChangeRecord[] };
 }> {
   private static readonly byId: { [id: string]: Session } = {};
 
+  public readonly db: SessionDb;
   public readonly id: string;
   public readonly databaseDir: string;
-
-  public sessionState: SessionState;
-  public resumeCounter = 0;
-
-  public get isClosing(): boolean {
-    return this._isClosing;
-  }
+  public readonly startDate = Date.now();
+  public nextCommandMeta: { commandId: number; startDate: Date; sendDate: Date };
+  public isClosing = false;
 
   protected readonly logger: IBoundLog;
-
-  private _isClosing = false;
 
   constructor(readonly options: ISessionCreateOptions) {
     super();
     this.id = uuidv1();
     Session.byId[this.id] = this;
     this.logger = log.createChild(module, { sessionId: this.id });
-    this.sessionState = new SessionState(this.id, options.scriptInstanceMeta);
-    this.sessionState.recordSession({
-      sessionOptions: {},
-    });
+    this.db = new SessionDb(this.id);
   }
 
   public recordOutput(changes: IOutputChangeRecord[]): void {
-    this.sessionState.recordOutputChanges(changes);
+    for (const change of changes) {
+      this.db.output.insert(change);
+    }
+    this.emit('output', { changes });
   }
 
-  public close(): Promise<void> {
+  public recordSession(options: { sessionOptions: ISessionCreateOptions }): void {
+    const { scriptInstanceMeta, ...optionsToStore } = options.sessionOptions;
+    this.db.session.insert(
+      this.id,
+      this.startDate,
+      scriptInstanceMeta?.id,
+      scriptInstanceMeta?.entrypoint,
+      scriptInstanceMeta?.startDate,
+      optionsToStore,
+    );
+
+    if (scriptInstanceMeta) {
+      const sessionsDb = SessionsDb.find();
+      sessionsDb.sessions.insert(
+        this.id,
+        Date.now(),
+        scriptInstanceMeta.id,
+        scriptInstanceMeta.entrypoint,
+        scriptInstanceMeta.startDate,
+      );
+    }
+  }
+
+  public close(): void {
     delete Session.byId[this.id];
-    if (this._isClosing) return;
+    if (this.isClosing) return;
     this.emit('closing');
-    this._isClosing = true;
+    this.isClosing = true;
     const start = log.info('Session.Closing', {
       sessionId: this.id,
     });
 
+    this.db.session.close(this.id, Date.now());
     log.stats('Session.Closed', {
       sessionId: this.id,
       parentLogId: start,
     });
+    this.db.flush();
     this.emit('closed');
-    this.sessionState.close();
+    this.db.close();
   }
 
   public static get(sessionId: string): Session {

@@ -31,7 +31,9 @@ describe('basic output tests', () => {
       protected destroyConnection = () => Promise.resolve(null);
     }
 
-    const databox = await Helpers.createClientDatabox({ connectionToCore: new MockedConnectionToCore() });
+    const databox = await Helpers.createClientDatabox({
+      connectionToCore: new MockedConnectionToCore(),
+    });
     databox.output.test = true;
     await databox.close();
 
@@ -48,8 +50,8 @@ describe('basic output tests', () => {
       type: 'insert',
       value: true,
       path: '["test"]',
-      timestamp: expect.any(Date),
-      lastCommandId: 0
+      timestamp: expect.any(Number),
+      lastCommandId: 0,
     });
   });
 });

@@ -136,7 +136,6 @@ export default class Core {
 ['exit', 'SIGTERM', 'SIGINT', 'SIGQUIT'].forEach(name => {
   process.once(name as Signals, async () => {
     await Core.shutdown();
-    process.exit(0);
   });
 });
 

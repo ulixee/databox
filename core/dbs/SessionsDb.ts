@@ -1,5 +1,7 @@
 import * as Database from 'better-sqlite3';
 import { Database as SqliteDatabase } from 'better-sqlite3';
+import * as Fs from 'fs';
+import { existsSync } from 'fs';
 import SessionsTable from '../models/SessionsTable';
 import Core from '../index';
 
@@ -20,11 +22,15 @@ interface IRelatedSession {
 
 export default class SessionsDb {
   private static instance: SessionsDb;
+  private static isDatabaseDirValid: boolean;
+
   public readonly sessions: SessionsTable;
   public readonly readonly: boolean;
   private db: SqliteDatabase;
 
   constructor(dbOptions: IDbOptions = {}) {
+    SessionsDb.start();
+
     const { readonly = false, fileMustExist = false } = dbOptions;
     this.db = new Database(SessionsDb.databasePath, { readonly, fileMustExist });
     this.readonly = readonly;
@@ -93,7 +99,7 @@ export default class SessionsDb {
   }
 
   public static find(): SessionsDb {
-    SessionsDb.instance = SessionsDb.instance || new SessionsDb();
+    SessionsDb.instance ??= new SessionsDb();
     return SessionsDb.instance;
   }
 
@@ -103,5 +109,11 @@ export default class SessionsDb {
 
   public static get databasePath(): string {
     return `${this.databaseDir}/databox-instances.db`;
+  }
+
+  public static start(): void {
+    if (this.isDatabaseDirValid) return;
+    if (!existsSync(this.databaseDir)) Fs.mkdirSync(this.databaseDir, { recursive: true });
+    this.isDatabaseDirValid = true;
   }
 }

@@ -64,7 +64,9 @@ describe('basic Databox tests', () => {
     process.env.DATABOX_RUN_LATER = 'true';
     let ranScript = false;
     const connectionToCore = new MockedConnectionToCore();
-    const packagedDatabox = new PackagedDatabox(() => { ranScript = true });
+    const packagedDatabox = new PackagedDatabox(() => {
+      ranScript = true;
+    });
     await packagedDatabox.run({ connectionToCore });
     expect(ranScript).toBe(true);
 
@@ -82,11 +84,13 @@ describe('basic Databox tests', () => {
     process.argv[4] = '--input.address.number=9145';
     process.argv[5] = '--input.address.street="Street Street"';
     expect(readCommandLineArgs()).toEqual({
-      city: 'Atlanta',
-      state: 'GA',
-      address: {
-        number: '9145',
-        street: 'Street Street',
+      input: {
+        city: 'Atlanta',
+        state: 'GA',
+        address: {
+          number: 9145,
+          street: 'Street Street',
+        },
       },
     });
   });
