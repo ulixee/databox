@@ -15,15 +15,28 @@ try {
 
 if (HeroConstructor) {
   HeroConstructor.on('new', (hero: Hero, options: IHeroCreateOptions) => {
-    const possibleDatabox = options.databox || (options as RunningDatabox);
-    delete options.databox;
-    const databox: RunningDatabox =
-      possibleDatabox?.constructor.name === RunningDatabox.name ? possibleDatabox : null;
+    const databox = options instanceof RunningDatabox ? options : options.databox;
     if (!databox) return;
+
+    delete options.databox;
+
+    if (databox.queryOptions) {
+      for (const [key, value] of Object.entries(databox.queryOptions)) {
+        if (!options[key]) options[key] = value;
+      }
+    }
 
     if (!options.connectionToCore) {
       options.connectionToCore = { host: databox.host };
     }
+
+    if (!(options instanceof RunningDatabox)) {
+      // align session ids to make easier to find
+      options.sessionId = databox.sessionId;
+    }
+
+    options.externalIds ??= {};
+    options.externalIds.databoxSessionId = databox.sessionId;
 
     hero.on('command', (command, commandId) => {
       databox.lastExternalId = commandId;

@@ -19,15 +19,9 @@ export default class OutputTable extends SqliteTable<IOutputChangeRecord> {
   }
 
   public insert(record: IOutputChangeRecord): void {
+    record.value = JSON.stringify(record.value);
     const { type, path, value, lastCommandId, lastExternalId, timestamp } = record;
-    this.queuePendingInsert([
-      type,
-      path,
-      JSON.stringify(value),
-      lastCommandId,
-      lastExternalId,
-      timestamp.getTime(),
-    ]);
+    this.queuePendingInsert([type, path, value, lastCommandId, lastExternalId, timestamp]);
   }
 }
 
@@ -37,5 +31,5 @@ export interface IOutputChangeRecord {
   value: string;
   lastCommandId: number;
   lastExternalId: number;
-  timestamp: Date;
+  timestamp: number;
 }

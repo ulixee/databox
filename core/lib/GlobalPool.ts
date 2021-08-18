@@ -5,6 +5,7 @@ import ISessionCreateOptions from '@ulixee/databox-interfaces/ISessionCreateOpti
 import { CanceledPromiseError } from '@ulixee/commons/interfaces/IPendingWaitEvent';
 import SessionsDb from '../dbs/SessionsDb';
 import Session from './Session';
+import SessionDb from '../dbs/SessionDb';
 
 const { log } = Log(module);
 
@@ -32,11 +33,14 @@ export default class GlobalPool {
     log.info('StartingGlobalPool', {
       sessionId: null,
     });
+    SessionDb.start();
+    SessionsDb.start();
+
     return Promise.resolve();
   }
 
   public static createSession(options: ISessionCreateOptions): Promise<Session> {
-    log.info('AcquiringChrome', {
+    log.info('AcquiringSession', {
       sessionId: null,
       activeSessionCount: this.activeSessionCount,
       waitingForAvailability: this.waitingForAvailability.length,
@@ -56,7 +60,7 @@ export default class GlobalPool {
     this.isClosing = true;
     const logId = log.stats('GlobalPool.Closing', {
       sessionId: null,
-      waitingForAvailability: this.waitingForAvailability.length
+      waitingForAvailability: this.waitingForAvailability.length,
     });
 
     for (const { promise } of this.waitingForAvailability) {
@@ -92,7 +96,7 @@ export default class GlobalPool {
 
     const wasTransferred = this.resolveWaitingConnection();
     if (wasTransferred) {
-      log.info('ReleasingChrome', {
+      log.info('ReleasingSession', {
         sessionId: null,
         activeSessionCount: this.activeSessionCount,
         waitingForAvailability: this.waitingForAvailability.length,
@@ -110,7 +114,7 @@ export default class GlobalPool {
     // eslint-disable-next-line promise/catch-or-return
     this.createSessionNow(options).then(session => promise.resolve(session));
 
-    log.info('TransferredChromeToWaitingAcquirer');
+    log.info('TransferredSessionToWaitingAcquirer');
     return true;
   }
 }

@@ -27,7 +27,7 @@ export function createObservableOutput<T>(coreSession): Output<T> {
       type: change.type,
       value: change.value,
       path: JSON.stringify(change.path),
-      timestamp: new Date(),
+      timestamp: Date.now(),
     }));
     coreSession.then(x => x.recordOutput(changesToRecord)).catch(() => null);
   };

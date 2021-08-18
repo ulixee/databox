@@ -18,23 +18,23 @@ export default class PackagedDatabox implements IPackagedDatabox {
     this.#components = {
       scriptFn,
       ...otherComponents,
-    }
+    };
     if (process.env.DATABOX_RUN_LATER) return;
 
-    const input = readCommandLineArgs();
-    const options: IDataboxRunOptions = { input };
+    const options: IDataboxRunOptions = readCommandLineArgs();
     const ulixeeConfig = loadUlixeeConfig();
     if (ulixeeConfig.serverHost) {
       options.connectionToCore = { host: ulixeeConfig.serverHost };
     }
 
     this.run(options).catch(error => {
-      console.log(`ERROR running databox: `, error)
+      // eslint-disable-next-line no-console
+      console.log(`ERROR running databox: `, error);
     });
   }
 
   public async run(options: IDataboxRunOptions = {}): Promise<void> {
-    const { createRunningDatabox } = this.constructor as any
+    const { createRunningDatabox } = this.constructor as typeof PackagedDatabox;
     this.runningDatabox = await createRunningDatabox.call(this, options);
     await this.#components.scriptFn(this.runningDatabox);
     const output = this.runningDatabox.output;

@@ -76,7 +76,6 @@
       "fullstack",
       "interfaces",
       "testing",
-      "tools",
       "../hero/build/*",
       "../hero/build/plugins/*"
     ]
