@@ -29,18 +29,23 @@ export default class PackagedDatabox implements IPackagedDatabox {
 
     this.run(options).catch(error => {
       // eslint-disable-next-line no-console
-      console.log(`ERROR running databox: `, error);
+      console.error(`ERROR running databox: `, error);
     });
   }
 
   public async run(options: IDataboxRunOptions = {}): Promise<void> {
     const { createRunningDatabox } = this.constructor as typeof PackagedDatabox;
-    this.runningDatabox = await createRunningDatabox.call(this, options);
-    await this.#components.scriptFn(this.runningDatabox);
-    const output = this.runningDatabox.output;
-    await this.runningDatabox.close();
-    this.runningDatabox = undefined;
-    return output;
+    try {
+      this.runningDatabox = await createRunningDatabox.call(this, options);
+      await this.#components.scriptFn(this.runningDatabox);
+      return this.runningDatabox.output;
+    } catch (error) {
+      this.runningDatabox?.emit('error', error);
+      throw error;
+    } finally {
+      await this.runningDatabox.close();
+      this.runningDatabox = undefined;
+    }
   }
 
   public static createRunningDatabox(options: IDataboxRunOptions = {}): Promise<RunningDatabox> {

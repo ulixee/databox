@@ -86,6 +86,51 @@ describe('basic Databox+Hero tests', () => {
     ]);
   });
 
+  it('should call close on hero automatically', async () => {
+    process.env.DATABOX_RUN_LATER = 'true';
+    const connectionToDataboxCore = new MockedConnectionToDataboxCore();
+    const connectionToHeroCore = new MockedConnectionToHeroCore();
+    const packagedDatabox = new PackagedDatabox(async databox => {
+      const hero = new Hero({ databox, connectionToCore: connectionToHeroCore });
+      await hero.goto('https://news.ycombinator.org');
+    });
+    await packagedDatabox.run({ connectionToCore: connectionToDataboxCore });
+
+    const outgoingHeroCommands = connectionToHeroCore.outgoing.mock.calls;
+    expect(outgoingHeroCommands.map(c => c[0].command)).toMatchObject([
+      'Core.connect',
+      'Session.create',
+      'Tab.goto',
+      'Session.close',
+    ]);
+  });
+
+  it('should emit close hero on error', async () => {
+    process.env.DATABOX_RUN_LATER = 'true';
+    const connectionToDataboxCore = new MockedConnectionToDataboxCore();
+    const connectionToHeroCore = new MockedConnectionToHeroCore();
+    const packagedDatabox = new PackagedDatabox(async databox => {
+      const hero = new Hero({ databox, connectionToCore: connectionToHeroCore });
+      await hero.goto('https://news.ycombinator.org').then(() => {
+        throw new Error('test');
+      });
+
+      await hero.interact('click');
+    });
+
+    await expect(
+      packagedDatabox.run({ connectionToCore: connectionToDataboxCore }),
+    ).rejects.toThrowError();
+
+    const outgoingHeroCommands = connectionToHeroCore.outgoing.mock.calls;
+    expect(outgoingHeroCommands.map(c => c[0].command)).toMatchObject([
+      'Core.connect',
+      'Session.create',
+      'Tab.goto',
+      'Session.close',
+    ]);
+  });
+
   it.skip('should pass host from Databox to Hero', async () => {
     // ToDo
   });

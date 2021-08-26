@@ -1,10 +1,11 @@
 import IDataboxMeta from '@ulixee/databox-interfaces/IDataboxMeta';
 import IDataboxRunOptions from '@ulixee/databox-interfaces/IDataboxRunOptions';
+import { TypedEventEmitter } from '@ulixee/commons/lib/eventUtils';
 import Output, { createObservableOutput } from './Output';
 import ConnectionManager from './ConnectionManager';
 import DisconnectedFromCoreError from '../connections/DisconnectedFromCoreError';
 
-export default class RunningDatabox {
+export default class RunningDatabox extends TypedEventEmitter<{ close: void; error: Error }> {
   #output: Output;
   #connectionManager: ConnectionManager;
   #isClosing: Promise<void>;
@@ -12,6 +13,7 @@ export default class RunningDatabox {
   readonly queryOptions: IDataboxRunOptions;
 
   constructor(connectionManager: ConnectionManager, queryOptions: IDataboxRunOptions) {
+    super();
     this.#connectionManager = connectionManager;
     this.queryOptions = queryOptions;
   }
@@ -75,6 +77,7 @@ export default class RunningDatabox {
 
   public close(): Promise<void> {
     if (this.#isClosing) return this.#isClosing;
+    this.emit('close');
     this.#isClosing = new Promise(async (resolve, reject) => {
       try {
         await this.#connectionManager.close();
