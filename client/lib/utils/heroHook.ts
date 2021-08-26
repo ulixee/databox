@@ -41,5 +41,8 @@ if (HeroConstructor) {
     hero.on('command', (command, commandId) => {
       databox.lastExternalId = commandId;
     });
+
+    databox.on('close', () => hero.close());
+    databox.on('error', () => hero.close());
   });
 }
