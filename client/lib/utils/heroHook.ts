@@ -42,7 +42,7 @@ if (HeroConstructor) {
       databox.lastExternalId = commandId;
     });
 
-    databox.on('close', () => hero.close());
+    databox.beforeClose = () => hero.close();
     databox.on('error', () => hero.close());
   });
 }

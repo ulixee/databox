@@ -10,6 +10,8 @@ export default class RunningDatabox extends TypedEventEmitter<{ close: void; err
   #connectionManager: ConnectionManager;
   #isClosing: Promise<void>;
 
+  beforeClose?: () => Promise<any>;
+
   readonly queryOptions: IDataboxRunOptions;
 
   constructor(connectionManager: ConnectionManager, queryOptions: IDataboxRunOptions) {
@@ -80,6 +82,7 @@ export default class RunningDatabox extends TypedEventEmitter<{ close: void; err
     this.emit('close');
     this.#isClosing = new Promise(async (resolve, reject) => {
       try {
+        if (this.beforeClose) await this.beforeClose();
         await this.#connectionManager.close();
         resolve();
       } catch (error) {
