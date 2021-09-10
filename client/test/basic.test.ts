@@ -10,7 +10,7 @@ afterAll(Helpers.afterAll);
 class MockedConnectionToCore extends ConnectionToCore {
   public readonly outgoing = jest.fn(
     async ({ command }: ICoreRequestPayload): Promise<ICoreResponsePayload> => {
-      if (command === 'Session.create') {
+      if (command === 'Core.createSession') {
         return {
           data: { sessionId: 'session-id' },
         };
@@ -54,7 +54,7 @@ describe('basic Databox tests', () => {
     const outgoingCommands = connectionToCore.outgoing.mock.calls;
     expect(outgoingCommands.map(c => c[0].command)).toMatchObject([
       'Core.connect',
-      'Session.create',
+      'Core.createSession',
       'Session.close',
       'Core.disconnect',
     ]);
@@ -73,7 +73,7 @@ describe('basic Databox tests', () => {
     const outgoingCommands = connectionToCore.outgoing.mock.calls;
     expect(outgoingCommands.map(c => c[0].command)).toMatchObject([
       'Core.connect',
-      'Session.create',
+      'Core.createSession',
       'Session.close',
     ]);
   });

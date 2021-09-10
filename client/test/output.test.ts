@@ -9,7 +9,7 @@ describe('basic output tests', () => {
   it('sends output changes to server', async () => {
     const outgoing = jest.fn(
       async ({ command }: ICoreRequestPayload): Promise<ICoreResponsePayload> => {
-        if (command === 'Session.create') {
+        if (command === 'Core.createSession') {
           return {
             data: { sessionId: 'session-id' },
           };
@@ -40,7 +40,7 @@ describe('basic output tests', () => {
     const outgoingCommands = outgoing.mock.calls;
     expect(outgoingCommands.map(c => c[0].command)).toMatchObject([
       'Core.connect',
-      'Session.create',
+      'Core.createSession',
       'Session.flush',
       'Session.close',
     ]);

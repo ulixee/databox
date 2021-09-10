@@ -10,7 +10,7 @@ afterAll(Helpers.afterAll);
 class MockedConnectionToDataboxCore extends ConnectionToDataboxCore {
   public readonly outgoing = jest.fn(
     async ({ command }: ICoreRequestPayload): Promise<ICoreResponsePayload> => {
-      if (command === 'Session.create') {
+      if (command === 'Core.createSession') {
         return {
           data: { sessionId: 'session-id' },
         };
@@ -34,7 +34,7 @@ class MockedConnectionToDataboxCore extends ConnectionToDataboxCore {
 class MockedConnectionToHeroCore extends ConnectionToHeroCore {
   public readonly outgoing = jest.fn(
     async ({ command }: ICoreRequestPayload): Promise<ICoreResponsePayload> => {
-      if (command === 'Session.create') {
+      if (command === 'Core.createSession') {
         return {
           data: { sessionId: 'session-id' },
         };
@@ -73,14 +73,14 @@ describe('basic Databox+Hero tests', () => {
     const outgoingDataboxCommands = connectionToDataboxCore.outgoing.mock.calls;
     expect(outgoingDataboxCommands.map(c => c[0].command)).toMatchObject([
       'Core.connect',
-      'Session.create',
+      'Core.createSession',
       'Session.close',
     ]);
 
     const outgoingHeroCommands = connectionToHeroCore.outgoing.mock.calls;
     expect(outgoingHeroCommands.map(c => c[0].command)).toMatchObject([
       'Core.connect',
-      'Session.create',
+      'Core.createSession',
       'Tab.goto',
       'Session.close',
     ]);
@@ -99,7 +99,7 @@ describe('basic Databox+Hero tests', () => {
     const outgoingHeroCommands = connectionToHeroCore.outgoing.mock.calls;
     expect(outgoingHeroCommands.map(c => c[0].command)).toMatchObject([
       'Core.connect',
-      'Session.create',
+      'Core.createSession',
       'Tab.goto',
       'Session.close',
     ]);
@@ -125,7 +125,7 @@ describe('basic Databox+Hero tests', () => {
     const outgoingHeroCommands = connectionToHeroCore.outgoing.mock.calls;
     expect(outgoingHeroCommands.map(c => c[0].command)).toMatchObject([
       'Core.connect',
-      'Session.create',
+      'Core.createSession',
       'Tab.goto',
       'Session.close',
     ]);

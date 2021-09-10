@@ -152,9 +152,7 @@ export default abstract class ConnectionToCore extends TypedEventEmitter<{
     return this.internalSendRequestAndWait(payload);
   }
 
-  public onMessage(
-    payload: ICoreResponsePayload | ICoreConnectionEventPayload,
-  ): void {
+  public onMessage(payload: ICoreResponsePayload | ICoreConnectionEventPayload): void {
     if ((payload as ICoreConnectionEventPayload).disconnecting) {
       this.willDisconnect();
     } else if ((payload as ICoreResponsePayload).responseId) {
@@ -168,7 +166,7 @@ export default abstract class ConnectionToCore extends TypedEventEmitter<{
 
   public async createSession(options: ISessionCreateOptions): Promise<CoreSession> {
     try {
-      const sessionMeta = await this.commandQueue.run<ISessionMeta>('Session.create', options);
+      const sessionMeta = await this.commandQueue.run<ISessionMeta>('Core.createSession', options);
       const session = new CoreSession({ ...sessionMeta }, this);
       this.coreSessions.track(session);
       return session;

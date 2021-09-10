@@ -32,7 +32,7 @@ export default class ConnectionToClient extends TypedEventEmitter<{
     ['Core.connect', 'connect'],
     ['Core.disconnect', 'disconnect'],
     ['Core.logUnhandledError', 'logUnhandledError'],
-    ['Session.create', 'createSession'],
+    ['Core.createSession', 'createSession'],
     ['Session.close', 'closeSession'],
     ['Session.flush', 'flush'],
     ['Session.getDataboxMeta', 'getDataboxMeta'],
@@ -206,7 +206,7 @@ export default class ConnectionToClient extends TypedEventEmitter<{
       }
 
       const method = this.clientExposedMethods.get(command) as string;
-      if (target === 'Core' || command === 'Session.create') {
+      if (target === 'Core') {
         return await this[method](...args);
       }
 
