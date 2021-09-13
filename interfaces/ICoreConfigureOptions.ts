@@ -1,4 +1,4 @@
-export default interface ICoreConfigureOptions {
+export interface ICoreConfigureOptions {
   maxConcurrentClientCount?: number;
   localProxyPortStart?: number;
   dataDir?: string;

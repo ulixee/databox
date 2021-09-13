@@ -1,6 +1,6 @@
-import RunningDatabox from '../lib/RunningDatabox';
+import { RunningDatabox } from '../lib/RunningDatabox';
 
-export default interface IComponents {
+export interface IComponents {
   scriptFn: IScriptFn;
   schema?: any;
 }

@@ -1,10 +1,10 @@
 import Core from '@ulixee/databox-core';
 import { ConnectionToCore } from '@ulixee/databox';
-import ICoreRequestPayload from '@ulixee/databox-interfaces/ICoreRequestPayload';
-import ConnectionToClient from '@ulixee/databox-core/connections/ConnectionToClient';
-import TypeSerializer from '@ulixee/commons/lib/TypeSerializer';
+import { ICoreRequestPayload } from '@ulixee/databox-interfaces/ICoreRequestPayload';
+import { ConnectionToClient } from '@ulixee/databox-core/connections/ConnectionToClient';
+import { TypeSerializer } from '@ulixee/commons/lib/TypeSerializer';
 
-export default class ConnectionToLocalCore extends ConnectionToCore {
+export class ConnectionToLocalCore extends ConnectionToCore {
   public static shouldSerialize = false;
 
   #connectionToClient: ConnectionToClient;

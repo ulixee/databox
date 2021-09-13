@@ -1,14 +1,15 @@
-import ISessionCreateOptions from '@ulixee/databox-interfaces/ISessionCreateOptions';
-import IDataboxRunOptions from '@ulixee/databox-interfaces/IDataboxRunOptions';
-import ConnectionToCore from '../connections/ConnectionToCore';
-import CoreSession from './CoreSession';
-import ConnectionFactory, { ICreateConnectionToCoreFn } from '../connections/ConnectionFactory';
+import { ISessionCreateOptions } from '@ulixee/databox-interfaces/ISessionCreateOptions';
+import { IDataboxRunOptions } from '@ulixee/databox-interfaces/IDataboxRunOptions';
+import { ConnectionToCore } from '../connections/ConnectionToCore';
+import { CoreSession } from './CoreSession';
+import { ConnectionFactory, ICreateConnectionToCoreFn } from '../connections/ConnectionFactory';
 
-type IStateOptions = ISessionCreateOptions & Pick<IDataboxRunOptions, 'connectionToCore'> & {
-  createConnectionToCoreFn?: ICreateConnectionToCoreFn;
-}
+type IStateOptions = ISessionCreateOptions &
+  Pick<IDataboxRunOptions, 'connectionToCore'> & {
+    createConnectionToCoreFn?: ICreateConnectionToCoreFn;
+  };
 
-export default class ConnectionManager {
+export class ConnectionManager {
   readonly #connectionToCore: ConnectionToCore;
   readonly #didCreateConnection: boolean = false;
   readonly #coreSessionPromise: Promise<CoreSession | Error>;
@@ -30,16 +31,19 @@ export default class ConnectionManager {
       this.#didCreateConnection = true;
     }
 
-    this.#coreSessionPromise = this.#connectionToCore.createSession(options).catch(err => err).then(result => {
-      this.hasConnected = true;
-      if (result instanceof CoreSession) {
-        this.#coreSession = result;
-        this.#coreSession.lastExternalId = this.#lastExternalId;
-      } else {
-        this.#coreSessionError = result;
-      }
-      return result;
-    });
+    this.#coreSessionPromise = this.#connectionToCore
+      .createSession(options)
+      .catch(err => err)
+      .then(result => {
+        this.hasConnected = true;
+        if (result instanceof CoreSession) {
+          this.#coreSession = result;
+          this.#coreSession.lastExternalId = this.#lastExternalId;
+        } else {
+          this.#coreSessionError = result;
+        }
+        return result;
+      });
   }
 
   public set lastExternalId(lastExternalId: number) {

@@ -1,5 +1,5 @@
 import { Helpers } from '@ulixee/databox-testing';
-import SessionDb from '@ulixee/databox-core/dbs/SessionDb';
+import { SessionDb } from '@ulixee/databox-core/dbs/SessionDb';
 import { Observable } from '@ulixee/databox/lib/ObjectObserver';
 
 beforeAll(async () => {

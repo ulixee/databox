@@ -1,9 +1,9 @@
 import Hero, { ConnectionToCore as ConnectionToHeroCore } from '@ulixee/hero';
-import ICoreRequestPayload from '@ulixee/databox-interfaces/ICoreRequestPayload';
-import ICoreResponsePayload from '@ulixee/databox-interfaces/ICoreResponsePayload';
+import { ICoreRequestPayload } from '@ulixee/databox-interfaces/ICoreRequestPayload';
+import { ICoreResponsePayload } from '@ulixee/databox-interfaces/ICoreResponsePayload';
 import { Helpers } from '@ulixee/databox-testing';
 import PackagedDatabox from '../index';
-import ConnectionToDataboxCore from '../connections/ConnectionToCore';
+import { ConnectionToCore as ConnectionToDataboxCore } from '../connections/ConnectionToCore';
 
 afterAll(Helpers.afterAll);
 
@@ -131,7 +131,5 @@ describe('basic Databox+Hero tests', () => {
     ]);
   });
 
-  it.skip('should pass host from Databox to Hero', async () => {
-    // ToDo
-  });
+  it.todo('should pass host from Databox to Hero');
 });

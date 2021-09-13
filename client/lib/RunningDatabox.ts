@@ -1,11 +1,11 @@
-import IDataboxMeta from '@ulixee/databox-interfaces/IDataboxMeta';
-import IDataboxRunOptions from '@ulixee/databox-interfaces/IDataboxRunOptions';
+import { IDataboxMeta } from '@ulixee/databox-interfaces/IDataboxMeta';
+import { IDataboxRunOptions } from '@ulixee/databox-interfaces/IDataboxRunOptions';
 import { TypedEventEmitter } from '@ulixee/commons/lib/eventUtils';
-import Output, { createObservableOutput } from './Output';
-import ConnectionManager from './ConnectionManager';
-import DisconnectedFromCoreError from '../connections/DisconnectedFromCoreError';
+import { Output, createObservableOutput } from './Output';
+import { ConnectionManager } from './ConnectionManager';
+import { DisconnectedFromCoreError } from '../connections/DisconnectedFromCoreError';
 
-export default class RunningDatabox extends TypedEventEmitter<{ close: void; error: Error }> {
+export class RunningDatabox extends TypedEventEmitter<{ close: void; error: Error }> {
   #output: Output;
   #connectionManager: ConnectionManager;
   #isClosing: Promise<void>;

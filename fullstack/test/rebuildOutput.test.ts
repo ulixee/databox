@@ -1,7 +1,7 @@
 import { Helpers } from '@ulixee/databox-testing';
-import Output from '@ulixee/databox/lib/Output';
-import OutputRebuilder from '@ulixee/databox-core/lib/OutputRebuilder';
-import ObjectObserver from '@ulixee/databox/lib/ObjectObserver';
+import { Output } from '@ulixee/databox/lib/Output';
+import { OutputRebuilder } from '@ulixee/databox-core/lib/OutputRebuilder';
+import { ObjectObserver } from '@ulixee/databox/lib/ObjectObserver';
 
 afterAll(Helpers.afterAll);
 afterEach(Helpers.afterEach);

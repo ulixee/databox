@@ -1,11 +1,11 @@
-import ISessionMeta from '@ulixee/databox-interfaces/ISessionMeta';
+import { ISessionMeta } from '@ulixee/databox-interfaces/ISessionMeta';
 import { loggerSessionIdNames } from '@ulixee/commons/lib/Logger';
-import IDataboxMeta from '@ulixee/databox-interfaces/IDataboxMeta';
-import ICoreSession from '@ulixee/databox-interfaces/ICoreSession';
-import CoreCommandQueue from './CoreCommandQueue';
-import ConnectionToCore from '../connections/ConnectionToCore';
+import { IDataboxMeta } from '@ulixee/databox-interfaces/IDataboxMeta';
+import { ICoreSession } from '@ulixee/databox-interfaces/ICoreSession';
+import { CoreCommandQueue } from './CoreCommandQueue';
+import { ConnectionToCore } from '../connections/ConnectionToCore';
 
-export default class CoreSession implements ICoreSession {
+export class CoreSession implements ICoreSession {
   #commandId = 0;
   #lastExternalId = 0;
 

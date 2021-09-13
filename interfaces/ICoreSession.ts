@@ -1,12 +1,10 @@
-import IDataboxMeta from './IDataboxMeta';
+import { IDataboxMeta } from './IDataboxMeta';
 
-export default interface ICoreSession {
+export interface ICoreSession {
   lastExternalId: number;
   lastCommandId: number;
   nextCommandId: number;
   getDataboxMeta(): Promise<IDataboxMeta>;
-  recordOutput(
-    changes: { type: string; value: any; path: string; timestamp: Date }[],
-  ): void;
+  recordOutput(changes: { type: string; value: any; path: string; timestamp: Date }[]): void;
   close(): Promise<void>;
 }

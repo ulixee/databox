@@ -1,7 +1,7 @@
 import { inspect } from 'util';
-import ObjectObserver from './ObjectObserver';
+import { ObjectObserver } from './ObjectObserver';
 
-export default class Output<T = any> extends Array<T> {
+export class Output<T = any> extends Array<T> {
   [key: string]: any;
 
   toJSON(): any {

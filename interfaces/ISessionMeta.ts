@@ -1,3 +1,3 @@
-export default interface ISessionMeta {
+export interface ISessionMeta {
   sessionId: string;
 }

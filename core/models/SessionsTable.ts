@@ -1,7 +1,7 @@
 import { Database as SqliteDatabase } from 'better-sqlite3';
-import SqliteTable from '@ulixee/commons/lib/SqliteTable';
+import { SqliteTable } from '@ulixee/commons/lib/SqliteTable';
 
-export default class SessionsTable extends SqliteTable<ISessionRecord> {
+export class SessionsTable extends SqliteTable<ISessionRecord> {
   constructor(readonly db: SqliteDatabase) {
     super(db, 'Sessions', [
       ['id', 'TEXT'],

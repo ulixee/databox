@@ -1,25 +1,25 @@
-import ICoreRequestPayload from '@ulixee/databox-interfaces/ICoreRequestPayload';
-import ICoreResponsePayload from '@ulixee/databox-interfaces/ICoreResponsePayload';
+import { ICoreRequestPayload } from '@ulixee/databox-interfaces/ICoreRequestPayload';
+import { ICoreResponsePayload } from '@ulixee/databox-interfaces/ICoreResponsePayload';
 import { bindFunctions, createPromise } from '@ulixee/commons/lib/utils';
-import IResolvablePromise from '@ulixee/commons/interfaces/IResolvablePromise';
-import Log from '@ulixee/commons/lib/Logger';
-import ISessionCreateOptions from '@ulixee/databox-interfaces/ISessionCreateOptions';
-import ISessionMeta from '@ulixee/databox-interfaces/ISessionMeta';
+import { IResolvablePromise } from '@ulixee/commons/interfaces/IResolvablePromise';
+import { Logger } from '@ulixee/commons/lib/Logger';
+import { ISessionCreateOptions } from '@ulixee/databox-interfaces/ISessionCreateOptions';
+import { ISessionMeta } from '@ulixee/databox-interfaces/ISessionMeta';
 import { CanceledPromiseError } from '@ulixee/commons/interfaces/IPendingWaitEvent';
-import ICoreConfigureOptions from '@ulixee/databox-interfaces/ICoreConfigureOptions';
+import { ICoreConfigureOptions } from '@ulixee/databox-interfaces/ICoreConfigureOptions';
 import { TypedEventEmitter } from '@ulixee/commons/lib/eventUtils';
-import SessionClosedOrMissingError from '@ulixee/commons/lib/SessionClosedOrMissingError';
-import Resolvable from '@ulixee/commons/lib/Resolvable';
-import ICoreConnectionEventPayload from '@ulixee/databox-interfaces/ICoreConnectionEventPayload';
-import IConnectionToCoreOptions from '@ulixee/databox-interfaces/IConnectionToCoreOptions';
-import CoreCommandQueue from '../lib/CoreCommandQueue';
-import CoreSession from '../lib/CoreSession';
-import CoreSessions from '../lib/CoreSessions';
-import DisconnectedFromCoreError from './DisconnectedFromCoreError';
+import { SessionClosedOrMissingError } from '@ulixee/commons/lib/SessionClosedOrMissingError';
+import { Resolvable } from '@ulixee/commons/lib/Resolvable';
+import { ICoreConnectionEventPayload } from '@ulixee/databox-interfaces/ICoreConnectionEventPayload';
+import { IConnectionToCoreOptions } from '@ulixee/databox-interfaces/IConnectionToCoreOptions';
+import { CoreCommandQueue } from '../lib/CoreCommandQueue';
+import { CoreSession } from '../lib/CoreSession';
+import { CoreSessions } from '../lib/CoreSessions';
+import { DisconnectedFromCoreError } from './DisconnectedFromCoreError';
 
-const { log } = Log(module);
+const { log } = Logger(module);
 
-export default abstract class ConnectionToCore extends TypedEventEmitter<{
+export abstract class ConnectionToCore extends TypedEventEmitter<{
   disconnected: void;
   connected: void;
 }> {

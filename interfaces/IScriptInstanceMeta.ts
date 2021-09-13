@@ -1,4 +1,4 @@
-export default interface IScriptInstanceMeta {
+export interface IScriptInstanceMeta {
   id: string;
   entrypoint: string;
   startDate: number;

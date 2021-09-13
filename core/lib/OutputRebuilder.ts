@@ -6,7 +6,7 @@ export interface IOutputSnapshot {
   changes: { type: string; path: string }[];
 }
 
-export default class OutputRebuilder {
+export class OutputRebuilder {
   private snapshotsByExternalId = new Map<number, IOutputSnapshot>();
   private latestSnapshot: IOutputSnapshot;
 

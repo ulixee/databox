@@ -1,6 +1,6 @@
 import * as Fs from 'fs';
 
-export default function loadUlixeeConfig(): IConfig {
+export function loadUlixeeConfig(): IConfig {
   let config;
   config = config || tryLoad(`${process.cwd()}/ulixee.json`);
   if (require.main) {

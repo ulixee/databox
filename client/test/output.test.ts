@@ -1,7 +1,7 @@
-import ICoreRequestPayload from '@ulixee/databox-interfaces/ICoreRequestPayload';
-import ICoreResponsePayload from '@ulixee/databox-interfaces/ICoreResponsePayload';
+import { ICoreRequestPayload } from '@ulixee/databox-interfaces/ICoreRequestPayload';
+import { ICoreResponsePayload } from '@ulixee/databox-interfaces/ICoreResponsePayload';
 import { Helpers } from '@ulixee/databox-testing';
-import ConnectionToCore from '../connections/ConnectionToCore';
+import { ConnectionToCore } from '../connections/ConnectionToCore';
 
 afterAll(Helpers.afterAll);
 

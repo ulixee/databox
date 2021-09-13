@@ -1,3 +1,3 @@
-export default interface ICoreConnectionEventPayload {
+export interface ICoreConnectionEventPayload {
   disconnecting: boolean;
 }

@@ -13,11 +13,9 @@
  OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT,
  NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
-import IObservableChange, {
-  ObservableChangeType,
-} from '../interfaces/IObservableChange';
+import { IObservableChange, ObservableChangeType } from '../interfaces/IObservableChange';
 
-export default class ObjectObserver implements ProxyHandler<any> {
+export class ObjectObserver implements ProxyHandler<any> {
   private static key = Symbol.for('object-observer-key-v0');
 
   public onChanges: (changes: IObservableChange[]) => void;

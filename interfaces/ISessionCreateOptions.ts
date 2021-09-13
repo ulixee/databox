@@ -1,6 +1,6 @@
-import IScriptInstanceMeta from './IScriptInstanceMeta';
+import { IScriptInstanceMeta } from './IScriptInstanceMeta';
 
-export default interface ISessionCreateOptions {
+export interface ISessionCreateOptions {
   scriptInstanceMeta?: IScriptInstanceMeta;
   input?: { command?: string } & any;
 }

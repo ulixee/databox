@@ -64,6 +64,12 @@ module.exports = {
       },
     },
     {
+      files: ['**/index.ts', 'examples/*'],
+      rules: {
+        'import/no-default-export': 'off',
+      },
+    },
+    {
       files: ['global.d.ts'],
       rules: {
         '@typescript-eslint/no-unused-vars': 'off',
@@ -118,16 +124,11 @@ module.exports = {
     'import/prefer-default-export': 'off',
     'import/no-cycle': 'off', // TODO:we need to work through this!!
     'import/extensions': 'off',
-    // 'import/no-default-export': 'error',
+    'import/no-default-export': 'error',
     'import/no-extraneous-dependencies': [
       'error',
       {
-        devDependencies: [
-          '**/**/test/**',
-          '**/examples/**',
-          '**/scripts/**',
-          '**/*.test.ts',
-        ],
+        devDependencies: ['**/**/test/**', '**/examples/**', '**/scripts/**', '**/*.test.ts'],
       },
     ],
     'no-use-before-define': 'off', // use typescript one

@@ -1,4 +1,4 @@
-export default interface ICoreResponsePayload {
+export interface ICoreResponsePayload {
   responseId?: string;
   data: any;
 }

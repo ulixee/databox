@@ -2,7 +2,7 @@ import * as Database from 'better-sqlite3';
 import { Database as SqliteDatabase } from 'better-sqlite3';
 import * as Fs from 'fs';
 import { existsSync } from 'fs';
-import SessionsTable from '../models/SessionsTable';
+import { SessionsTable } from '../models/SessionsTable';
 import Core from '../index';
 
 interface IDbOptions {
@@ -20,7 +20,7 @@ interface IRelatedSession {
   id: string;
 }
 
-export default class SessionsDb {
+export class SessionsDb {
   private static instance: SessionsDb;
   private static isDatabaseDirValid: boolean;
 

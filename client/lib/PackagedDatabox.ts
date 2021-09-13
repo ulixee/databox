@@ -1,14 +1,14 @@
-import IDataboxRunOptions from '@ulixee/databox-interfaces/IDataboxRunOptions';
-import IPackagedDatabox from '@ulixee/databox-interfaces/IPackagedDatabox';
+import { IDataboxRunOptions } from '@ulixee/databox-interfaces/IDataboxRunOptions';
+import { IPackagedDatabox } from '@ulixee/databox-interfaces/IPackagedDatabox';
 import './utils/heroHook';
-import readCommandLineArgs from './utils/readCommandLineArgs';
-import RunningDatabox from './RunningDatabox';
-import IComponents, { IScriptFn } from '../interfaces/IComponents';
-import ConnectionManager from './ConnectionManager';
+import { readCommandLineArgs } from './utils/readCommandLineArgs';
+import { RunningDatabox } from './RunningDatabox';
+import { IComponents, IScriptFn } from '../interfaces/IComponents';
+import { ConnectionManager } from './ConnectionManager';
 import { ICreateConnectionToCoreFn } from '../connections/ConnectionFactory';
-import loadUlixeeConfig from './utils/loadUlixeeConfig';
+import { loadUlixeeConfig } from './utils/loadUlixeeConfig';
 
-export default class PackagedDatabox implements IPackagedDatabox {
+export class PackagedDatabox implements IPackagedDatabox {
   public static createConnectionToCoreFn: ICreateConnectionToCoreFn;
   public runningDatabox: RunningDatabox;
 

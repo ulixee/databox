@@ -1,6 +1,6 @@
 import type Hero from '@ulixee/hero';
-import type IHeroCreateOptions from '@ulixee/hero/interfaces/IHeroCreateOptions';
-import RunningDatabox from '../RunningDatabox';
+import type { IHeroCreateOptions } from '@ulixee/hero/interfaces/IHeroCreateOptions';
+import { RunningDatabox } from '../RunningDatabox';
 
 // This is our integration hook between Hero and Databox
 

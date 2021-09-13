@@ -1,15 +1,15 @@
 import { v1 as uuidv1 } from 'uuid';
-import Log from '@ulixee/commons/lib/Logger';
+import { Logger } from '@ulixee/commons/lib/Logger';
 import { IBoundLog } from '@ulixee/commons/interfaces/ILog';
 import { TypedEventEmitter } from '@ulixee/commons/lib/eventUtils';
-import ISessionCreateOptions from '@ulixee/databox-interfaces/ISessionCreateOptions';
+import { ISessionCreateOptions } from '@ulixee/databox-interfaces/ISessionCreateOptions';
 import { IOutputChangeRecord } from '../models/OutputTable';
-import SessionDb from '../dbs/SessionDb';
-import SessionsDb from '../dbs/SessionsDb';
+import { SessionDb } from '../dbs/SessionDb';
+import { SessionsDb } from '../dbs/SessionsDb';
 
-const { log } = Log(module);
+const { log } = Logger(module);
 
-export default class Session extends TypedEventEmitter<{
+export class Session extends TypedEventEmitter<{
   closing: void;
   closed: void;
   output: { changes: IOutputChangeRecord[] };

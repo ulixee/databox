@@ -1,9 +1,9 @@
-import ICoreRequestPayload from '@ulixee/databox-interfaces/ICoreRequestPayload';
-import ICoreResponsePayload from '@ulixee/databox-interfaces/ICoreResponsePayload';
+import { ICoreRequestPayload } from '@ulixee/databox-interfaces/ICoreRequestPayload';
+import { ICoreResponsePayload } from '@ulixee/databox-interfaces/ICoreResponsePayload';
 import { Helpers } from '@ulixee/databox-testing';
 import PackagedDatabox from '../index';
-import ConnectionToCore from '../connections/ConnectionToCore';
-import readCommandLineArgs from '../lib/utils/readCommandLineArgs';
+import { ConnectionToCore } from '../connections/ConnectionToCore';
+import { readCommandLineArgs } from '../lib/utils/readCommandLineArgs';
 
 afterAll(Helpers.afterAll);
 

@@ -1,22 +1,22 @@
-import ISessionMeta from '@ulixee/databox-interfaces/ISessionMeta';
-import ISessionCreateOptions from '@ulixee/databox-interfaces/ISessionCreateOptions';
+import { ISessionMeta } from '@ulixee/databox-interfaces/ISessionMeta';
+import { ISessionCreateOptions } from '@ulixee/databox-interfaces/ISessionCreateOptions';
 import { TypedEventEmitter } from '@ulixee/commons/lib/eventUtils';
-import ICoreRequestPayload from '@ulixee/databox-interfaces/ICoreRequestPayload';
-import ICoreResponsePayload from '@ulixee/databox-interfaces/ICoreResponsePayload';
-import ICoreConfigureOptions from '@ulixee/databox-interfaces/ICoreConfigureOptions';
-import IDataboxMeta from '@ulixee/databox-interfaces/IDataboxMeta';
-import Log from '@ulixee/commons/lib/Logger';
+import { ICoreRequestPayload } from '@ulixee/databox-interfaces/ICoreRequestPayload';
+import { ICoreResponsePayload } from '@ulixee/databox-interfaces/ICoreResponsePayload';
+import { ICoreConfigureOptions } from '@ulixee/databox-interfaces/ICoreConfigureOptions';
+import { IDataboxMeta } from '@ulixee/databox-interfaces/IDataboxMeta';
+import { Logger } from '@ulixee/commons/lib/Logger';
 import { CanceledPromiseError } from '@ulixee/commons/interfaces/IPendingWaitEvent';
-import SessionClosedOrMissingError from '@ulixee/commons/lib/SessionClosedOrMissingError';
-import TimeoutError from '@ulixee/commons/interfaces/TimeoutError';
-import Session from '../lib/Session';
-import GlobalPool from '../lib/GlobalPool';
+import { SessionClosedOrMissingError } from '@ulixee/commons/lib/SessionClosedOrMissingError';
+import { TimeoutError } from '@ulixee/commons/interfaces/TimeoutError';
+import { Session } from '../lib/Session';
+import { GlobalPool } from '../lib/GlobalPool';
 import Core from '../index';
 import { IOutputChangeRecord } from '../models/OutputTable';
 
-const { log } = Log(module);
+const { log } = Logger(module);
 
-export default class ConnectionToClient extends TypedEventEmitter<{
+export class ConnectionToClient extends TypedEventEmitter<{
   close: { fatalError?: Error };
   message: ICoreResponsePayload;
 }> {

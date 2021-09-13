@@ -1,7 +1,7 @@
-import Queue from '@ulixee/commons/lib/Queue';
-import CoreSession from './CoreSession';
+import { Queue } from '@ulixee/commons/lib/Queue';
+import { CoreSession } from './CoreSession';
 
-export default class CoreSessions {
+export class CoreSessions {
   public set concurrency(value: number) {
     this.queue.concurrency = value;
   }

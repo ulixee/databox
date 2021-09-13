@@ -1,15 +1,14 @@
-import Log from '@ulixee/commons/lib/Logger';
-import IConnectionToCoreOptions from '@ulixee/databox-interfaces/IConnectionToCoreOptions';
-import IConnectionToCore from '@ulixee/databox-interfaces/IConnectionToCore';
-import ConnectionToCore from './ConnectionToCore';
-import ConnectionToRemoteCoreServer from './ConnectionToRemoteCoreServer';
+import { Logger } from '@ulixee/commons/lib/Logger';
+import { IConnectionToCoreOptions } from '@ulixee/databox-interfaces/IConnectionToCoreOptions';
+import { IConnectionToCore } from '@ulixee/databox-interfaces/IConnectionToCore';
+import { ConnectionToCore } from './ConnectionToCore';
+import { ConnectionToRemoteCoreServer } from './ConnectionToRemoteCoreServer';
 
-const { log } = Log(module);
+const { log } = Logger(module);
 
 export type ICreateConnectionToCoreFn = (options: IConnectionToCoreOptions) => ConnectionToCore;
 
-export default class ConnectionFactory {
-
+export class ConnectionFactory {
   public static createConnection(
     options: IConnectionToCoreOptions | IConnectionToCore,
     overrideCreateConnectionToCoreFn?: ICreateConnectionToCoreFn,
@@ -28,8 +27,8 @@ export default class ConnectionFactory {
     } else {
       throw new Error(
         'Databox Core could not be found locally' +
-        '\n' +
-        'If you meant to connect to a remote host, include the "host" parameter for your connection'
+          '\n' +
+          'If you meant to connect to a remote host, include the "host" parameter for your connection',
       );
     }
 

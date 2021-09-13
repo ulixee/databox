@@ -1,4 +1,4 @@
-export default interface ICommandCounter {
+export interface ICommandCounter {
   nextCommandId: number;
   lastCommandId: number;
 }

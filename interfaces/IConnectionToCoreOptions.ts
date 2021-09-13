@@ -1,6 +1,6 @@
-import ICoreConfigureOptions from './ICoreConfigureOptions';
+import { ICoreConfigureOptions } from './ICoreConfigureOptions';
 
-export default interface IConnectionToCoreOptions
+export interface IConnectionToCoreOptions
   extends Omit<ICoreConfigureOptions, 'maxConcurrentClientCount'> {
   host?: string | Promise<string>;
   maxConcurrency?: number;

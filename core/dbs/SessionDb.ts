@@ -1,22 +1,22 @@
 import * as Database from 'better-sqlite3';
 import { Database as SqliteDatabase, Transaction } from 'better-sqlite3';
-import Log from '@ulixee/commons/lib/Logger';
-import SqliteTable from '@ulixee/commons/lib/SqliteTable';
+import { Logger } from '@ulixee/commons/lib/Logger';
+import { SqliteTable } from '@ulixee/commons/lib/SqliteTable';
 import * as Fs from 'fs';
 import { existsSync } from 'fs';
-import SessionTable from '../models/SessionTable';
-import SessionsDb from './SessionsDb';
-import OutputTable from '../models/OutputTable';
+import { SessionTable } from '../models/SessionTable';
+import { SessionsDb } from './SessionsDb';
+import { OutputTable } from '../models/OutputTable';
 import Core from '../index';
 
-const { log } = Log(module);
+const { log } = Logger(module);
 
 interface IDbOptions {
   readonly?: boolean;
   fileMustExist?: boolean;
 }
 
-export default class SessionDb {
+export class SessionDb {
   private static byId = new Map<string, SessionDb>();
   private static isDatabaseDirValid = false;
 

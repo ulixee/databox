@@ -1,15 +1,15 @@
 import * as Path from 'path';
 import * as Os from 'os';
 import * as Fs from 'fs';
-import ICoreConfigureOptions from '@ulixee/databox-interfaces/ICoreConfigureOptions';
-import Log, { hasBeenLoggedSymbol } from '@ulixee/commons/lib/Logger';
-import Resolvable from '@ulixee/commons/lib/Resolvable';
-import ConnectionToClient from './connections/ConnectionToClient';
-import Session from './lib/Session';
-import GlobalPool from './lib/GlobalPool';
+import { ICoreConfigureOptions } from '@ulixee/databox-interfaces/ICoreConfigureOptions';
+import { Logger, hasBeenLoggedSymbol } from '@ulixee/commons/lib/Logger';
+import { Resolvable } from '@ulixee/commons/lib/Resolvable';
+import { ConnectionToClient } from './connections/ConnectionToClient';
+import { Session } from './lib/Session';
+import { GlobalPool } from './lib/GlobalPool';
 import Signals = NodeJS.Signals;
 
-const { log } = Log(module);
+const { log } = Logger(module);
 let dataDir = process.env.DATABOX_DATA_DIR || Path.join(Os.tmpdir(), '.ulixee'); // transferred to GlobalPool below class definition
 
 export { GlobalPool, Session };

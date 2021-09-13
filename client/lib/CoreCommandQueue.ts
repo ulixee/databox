@@ -1,11 +1,11 @@
-import ISessionMeta from '@ulixee/databox-interfaces/ISessionMeta';
+import { ISessionMeta } from '@ulixee/databox-interfaces/ISessionMeta';
 import { CanceledPromiseError } from '@ulixee/commons/interfaces/IPendingWaitEvent';
-import Queue from '@ulixee/commons/lib/Queue';
-import ICoreRequestPayload from '@ulixee/databox-interfaces/ICoreRequestPayload';
-import ConnectionToCore from '../connections/ConnectionToCore';
-import ICommandCounter from '../interfaces/ICommandCounter';
+import { Queue } from '@ulixee/commons/lib/Queue';
+import { ICoreRequestPayload } from '@ulixee/databox-interfaces/ICoreRequestPayload';
+import { ConnectionToCore } from '../connections/ConnectionToCore';
+import { ICommandCounter } from '../interfaces/ICommandCounter';
 
-export default class CoreCommandQueue {
+export class CoreCommandQueue {
   public get lastCommandId(): number {
     return this.commandCounter?.lastCommandId;
   }

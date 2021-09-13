@@ -1,6 +1,5 @@
-import ISessionCreateOptions from './ISessionCreateOptions';
+import { ISessionCreateOptions } from './ISessionCreateOptions';
 
-export default interface IDataboxMeta
-  extends Omit<Required<ISessionCreateOptions>, 'scriptInstanceMeta'> {
+export interface IDataboxMeta extends Omit<Required<ISessionCreateOptions>, 'scriptInstanceMeta'> {
   sessionId: string;
 }

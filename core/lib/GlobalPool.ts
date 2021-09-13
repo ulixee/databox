@@ -1,15 +1,15 @@
-import Log from '@ulixee/commons/lib/Logger';
-import IResolvablePromise from '@ulixee/commons/interfaces/IResolvablePromise';
+import { Logger } from '@ulixee/commons/lib/Logger';
+import { IResolvablePromise } from '@ulixee/commons/interfaces/IResolvablePromise';
 import { createPromise } from '@ulixee/commons/lib/utils';
-import ISessionCreateOptions from '@ulixee/databox-interfaces/ISessionCreateOptions';
+import { ISessionCreateOptions } from '@ulixee/databox-interfaces/ISessionCreateOptions';
 import { CanceledPromiseError } from '@ulixee/commons/interfaces/IPendingWaitEvent';
-import SessionsDb from '../dbs/SessionsDb';
-import Session from './Session';
-import SessionDb from '../dbs/SessionDb';
+import { SessionsDb } from '../dbs/SessionsDb';
+import { Session } from './Session';
+import { SessionDb } from '../dbs/SessionDb';
 
-const { log } = Log(module);
+const { log } = Logger(module);
 
-export default class GlobalPool {
+export class GlobalPool {
   public static maxConcurrentClientCount = 10;
   public static localProxyPortStart = 0;
 

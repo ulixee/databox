@@ -1,4 +1,4 @@
-export default interface IObservableChange {
+export interface IObservableChange {
   path: PropertyKey[];
   type: ObservableChangeType;
   value?: any;
