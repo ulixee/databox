@@ -43,7 +43,7 @@ export default class PackagedDatabox implements IPackagedDatabox {
       this.runningDatabox?.emit('error', error);
       throw error;
     } finally {
-      await this.runningDatabox.close();
+      await this.runningDatabox?.close();
       this.runningDatabox = undefined;
     }
   }
