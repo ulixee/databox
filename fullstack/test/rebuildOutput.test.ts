@@ -11,7 +11,7 @@ describe('basic OutputRebuilder tests', () => {
     const observable = new ObjectObserver(new Output());
 
     const clientOutput = observable.proxy;
-    const replayOutput = new OutputRebuilder(true);
+    const replayOutput = new OutputRebuilder();
     let id = 0;
     observable.onChanges = changes => {
       const changesToRecord = changes.map(change => ({
@@ -57,11 +57,11 @@ describe('basic OutputRebuilder tests', () => {
     expect(replayOutput.getLatestSnapshot(id).output).toEqual(clientOutput.toJSON());
   });
 
-  it('should be able to track the latest state of an output snapshot', async () => {
+  it('should be able to get the latest state of an output snapshot', async () => {
     const observable = new ObjectObserver(new Output());
 
     const clientOutput = observable.proxy;
-    const replayOutput = new OutputRebuilder(false);
+    const replayOutput = new OutputRebuilder();
     let id = 1;
     observable.onChanges = changes => {
       const changesToRecord = changes.map(change => ({

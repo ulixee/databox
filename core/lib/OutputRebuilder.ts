@@ -8,15 +8,10 @@ export interface IOutputSnapshot {
 
 export default class OutputRebuilder {
   private snapshotsByExternalId = new Map<number, IOutputSnapshot>();
-  private latestSnapshot: IOutputSnapshot;
-
-  constructor(
-    // should we track changes by external id, or only latest?
-    readonly trackIncrementalOutputSnapshots: boolean = false,
-  ) {}
+  private latestExternalId = -1;
 
   public getLatestSnapshot(externalId?: number): IOutputSnapshot {
-    if (externalId === null || externalId === undefined) return this.latestSnapshot;
+    externalId ??= this.latestExternalId;
 
     for (let id = externalId; id >= 0; id -= 1) {
       if (this.snapshotsByExternalId.has(id)) {
@@ -26,13 +21,10 @@ export default class OutputRebuilder {
   }
 
   public applyChanges(changes: IOutputChangeRecord[]): void {
-    // clear out latest change list
-    if (!this.trackIncrementalOutputSnapshots && this.latestSnapshot) {
-      this.latestSnapshot.changes.length = 0;
-    }
-
     for (const output of changes) {
       const path = parseIfNeeded(output.path) as PropertyKey[];
+      if (output.lastExternalId > this.latestExternalId)
+        this.latestExternalId = output.lastExternalId;
 
       const snapshot = this.getSnapshotAtPoint(output.lastExternalId, path);
 
@@ -85,15 +77,6 @@ export default class OutputRebuilder {
     lastExternalId: number,
     firstPathEntry: PropertyKey[],
   ): IOutputSnapshot {
-    if (!this.trackIncrementalOutputSnapshots) {
-      this.latestSnapshot ??= {
-        output: typeof firstPathEntry[0] === 'number' ? [] : {},
-        changes: [],
-        bytes: 0,
-      };
-      return this.latestSnapshot;
-    }
-
     let prevExternalId = lastExternalId;
     while (prevExternalId >= 0) {
       if (this.snapshotsByExternalId.has(prevExternalId)) {
