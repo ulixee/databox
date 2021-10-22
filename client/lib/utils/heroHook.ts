@@ -38,7 +38,7 @@ if (HeroConstructor) {
     options.externalIds ??= {};
     options.externalIds.databoxSessionId = databox.sessionId;
 
-    hero.on('command', (command, commandId) => {
+    void hero.on('command', (command, commandId) => {
       databox.lastExternalId = commandId;
     });
 

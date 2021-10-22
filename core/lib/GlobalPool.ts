@@ -111,7 +111,7 @@ export default class GlobalPool {
     const { options, promise } = this.waitingForAvailability.shift();
 
     // NOTE: we want this to blow up if an exception occurs inside the promise
-    // eslint-disable-next-line promise/catch-or-return
+    // eslint-disable-next-line promise/catch-or-return,@typescript-eslint/no-floating-promises
     this.createSessionNow(options).then(session => promise.resolve(session));
 
     log.info('TransferredSessionToWaitingAcquirer');

@@ -20,7 +20,7 @@ export default class Core {
   public static onShutdown: () => void;
 
   public static allowDynamicPluginLoading = true;
-  public static isClosing: Promise<void>;
+  public static isClosing: Promise<void> = null;
   private static wasManuallyStarted = false;
   private static isStarting = false;
 
@@ -71,7 +71,7 @@ export default class Core {
   }
 
   public static async shutdown(): Promise<void> {
-    if (this.isClosing) return this.isClosing;
+    if (this.isClosing !== null) return this.isClosing;
 
     const isClosing = new Resolvable<void>();
     this.isClosing = isClosing.promise;

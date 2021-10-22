@@ -18,7 +18,6 @@ export default class Session extends TypedEventEmitter<{
 
   public readonly db: SessionDb;
   public readonly id: string;
-  public readonly databaseDir: string;
   public readonly startDate = Date.now();
   public nextCommandMeta: { commandId: number; startDate: Date; sendDate: Date };
   public isClosing = false;

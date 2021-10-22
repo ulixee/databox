@@ -131,7 +131,5 @@ describe('basic Databox+Hero tests', () => {
     ]);
   });
 
-  it.skip('should pass host from Databox to Hero', async () => {
-    // ToDo
-  });
+  it.todo('should pass host from Databox to Hero');
 });

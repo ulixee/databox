@@ -85,6 +85,7 @@ module.exports = {
         'promise/valid-params': 'off',
         '@typescript-eslint/explicit-function-return-type': 'off',
         'require-await': 'off',
+        '@typescript-eslint/require-await': 'off',
       },
     },
     {
@@ -114,20 +115,16 @@ module.exports = {
     '**/.temp',
   ],
   rules: {
-    'import/no-named-as-default-member': 'off',
+    'import/no-named-as-default': 'off',
     'import/prefer-default-export': 'off',
+    'import/namespace': 'off',
     'import/no-cycle': 'off', // TODO:we need to work through this!!
     'import/extensions': 'off',
     // 'import/no-default-export': 'error',
     'import/no-extraneous-dependencies': [
       'error',
       {
-        devDependencies: [
-          '**/**/test/**',
-          '**/examples/**',
-          '**/scripts/**',
-          '**/*.test.ts',
-        ],
+        devDependencies: ['**/**/test/**', '**/examples/**', '**/scripts/**', '**/*.test.ts'],
       },
     ],
     'no-use-before-define': 'off', // use typescript one
@@ -164,6 +161,8 @@ module.exports = {
     '@typescript-eslint/no-namespace': 'off',
     '@typescript-eslint/ordered-imports': 'off',
     '@typescript-eslint/return-await': 'off',
+    '@typescript-eslint/require-await': 'error',
+    '@typescript-eslint/no-floating-promises': 'error',
     '@typescript-eslint/no-shadow': [
       'error',
       { ignoreTypeValueShadow: true, ignoreFunctionTypeParameterNameValueShadow: true },

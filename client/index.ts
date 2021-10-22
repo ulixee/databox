@@ -1,5 +1,5 @@
 import IConnectionToCoreOptions from '@ulixee/databox-interfaces/IConnectionToCoreOptions';
-import type { IHeroCreateOptions } from '@ulixee/hero';
+import type {} from '@ulixee/hero';
 import { Observable } from './lib/ObjectObserver';
 import PackagedDatabox from './lib/PackagedDatabox';
 import ConnectionToCore from './connections/ConnectionToCore';

@@ -10,7 +10,7 @@
     "./lib/*": "./lib/*.js"
   },
   "dependencies": {
-    "@ulixee/commons": "1.5.5",
+    "@ulixee/commons": "1.5.6",
     "@ulixee/databox-interfaces": "1.5.4",
     "@types/ua-parser-js": "^0.7.35",
     "better-sqlite3": "^7.4.1",
