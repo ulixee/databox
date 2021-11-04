@@ -7,7 +7,7 @@
     "require": "./index.cjs"
   },
   "dependencies": {
-    "@ulixee/commons": "1.5.6",
+    "@ulixee/commons": "1.5.7",
     "@ulixee/databox": "1.5.4",
     "@ulixee/databox-core": "1.5.4",
     "@ulixee/databox-interfaces": "1.5.4"
