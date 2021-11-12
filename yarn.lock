@@ -1987,10 +1987,10 @@
     progress "^2.0.3"
     tar "^6.1.0"
 
-"@ulixee/commons@1.5.6":
-  version "1.5.6"
-  resolved "https://registry.yarnpkg.com/@ulixee/commons/-/commons-1.5.6.tgz#3aed593c09857cf152e20c557c18c4b6bde9e234"
-  integrity sha512-1CEwLDt7x5S/4P85skqeBRONsF/LVcc23Umcb+pukxW8RSaPW83paBGi+XxNrFhwJYdCncrc6qn1Y8nO1dN7NQ==
+"@ulixee/commons@1.5.7":
+  version "1.5.7"
+  resolved "https://registry.yarnpkg.com/@ulixee/commons/-/commons-1.5.7.tgz#e49ac8a144ca52c75d341f824fed93003645e7e7"
+  integrity sha512-SiFwBGVhOYnVJXAdTfgOARwgkSjgdD2ipRuhaXJh/8lISnKwIY2ed97SYP3Txd38fj6jLv52X2WS1w1+QZMvMg==
   dependencies:
     https-proxy-agent "^5.0.0"
     source-map-support "^0.5.19"
@@ -6054,6 +6054,11 @@ mute-stream@0.0.8, mute-stream@~0.0.4:
   version "0.0.8"
   resolved "https://registry.yarnpkg.com/mute-stream/-/mute-stream-0.0.8.tgz#1630c42b2251ff81e2a283de96a5497ea92e5e0d"
   integrity sha512-nnbWWOkoWyUsTjKrhgD0dcz22mdkSnpYqbEjIm2nhwhuxlSkpywJmBo8h0ZqJdkp73mb90SssHkN4rsRaBAfAA==
+
+nanoid@^3.1.30:
+  version "3.1.30"
+  resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.1.30.tgz#63f93cc548d2a113dc5dfbc63bfa09e2b9b64362"
+  integrity sha512-zJpuPDwOv8D2zq2WRoMe1HsfZthVewpel9CAvTfc/2mBD1uUT/agc5f7GHGWXlYkFvi1mVxe4IjvP2HNrop7nQ==
 
 napi-build-utils@^1.0.1:
   version "1.0.2"

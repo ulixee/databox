@@ -15,7 +15,7 @@
     "@types/ua-parser-js": "^0.7.35",
     "better-sqlite3": "^7.4.1",
     "moment": "^2.24.1",
-    "uuid": "^8.3.2"
+    "nanoid": "^3.1.30"
   },
   "devDependencies": {
     "@ulixee/databox": "1.5.4",

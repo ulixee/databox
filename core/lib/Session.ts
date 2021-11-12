@@ -1,4 +1,4 @@
-import { v1 as uuidv1 } from 'uuid';
+import { nanoid } from 'nanoid';
 import Log from '@ulixee/commons/lib/Logger';
 import { IBoundLog } from '@ulixee/commons/interfaces/ILog';
 import { TypedEventEmitter } from '@ulixee/commons/lib/eventUtils';
@@ -26,7 +26,7 @@ export default class Session extends TypedEventEmitter<{
 
   constructor(readonly options: ISessionCreateOptions) {
     super();
-    this.id = uuidv1();
+    this.id = nanoid();
     Session.byId[this.id] = this;
     this.logger = log.createChild(module, { sessionId: this.id });
     this.db = new SessionDb(this.id);
