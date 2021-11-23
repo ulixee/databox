@@ -16,6 +16,6 @@
     "@ulixee/databox-testing": "1.5.4",
     "fpcollect": "^1.0.4",
     "fpscanner": "^0.1.5",
-    "ws": "^7.4.4"
+    "ws": "^7.4.6"
   }
 }
