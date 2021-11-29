@@ -6,7 +6,7 @@ import RunningDatabox from './RunningDatabox';
 import IComponents, { IScriptFn } from '../interfaces/IComponents';
 import ConnectionManager from './ConnectionManager';
 import { ICreateConnectionToCoreFn } from '../connections/ConnectionFactory';
-import loadUlixeeConfig from './utils/loadUlixeeConfig';
+import UlixeeConfig from '@ulixee/commons/config';
 
 export default class PackagedDatabox implements IPackagedDatabox {
   public static createConnectionToCoreFn: ICreateConnectionToCoreFn;
@@ -22,9 +22,9 @@ export default class PackagedDatabox implements IPackagedDatabox {
     if (process.env.DATABOX_RUN_LATER) return;
 
     const options: IDataboxRunOptions = readCommandLineArgs();
-    const ulixeeConfig = loadUlixeeConfig();
-    if (ulixeeConfig.serverHost) {
-      options.connectionToCore = { host: ulixeeConfig.serverHost };
+    const serverHost = UlixeeConfig.load()?.serverHost ?? UlixeeConfig.global.serverHost;
+    if (serverHost) {
+      options.connectionToCore = { host: serverHost };
     }
 
     this.run(options).catch(error => {
