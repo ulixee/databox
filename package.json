@@ -76,7 +76,8 @@
       "interfaces",
       "testing",
       "../hero/build/*",
-      "../hero/build/plugins/*"
+      "../hero/build/plugins/*",
+      "../build/commons"
     ]
   },
   "lint-staged": {

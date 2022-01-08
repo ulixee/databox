@@ -1,3 +1,4 @@
+import '@ulixee/commons/lib/SourceMapSupport';
 import IConnectionToCoreOptions from '@ulixee/databox-interfaces/IConnectionToCoreOptions';
 import type {} from '@ulixee/hero';
 import { Observable } from './lib/ObjectObserver';
