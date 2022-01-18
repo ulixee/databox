@@ -104,11 +104,6 @@ jobs:
         env:
           HERO_REBUILD_MITM_SOCKET: 1
 
-      - name: Linux - Apt Install Chrome(s)
-        if: ${{ matrix.os == 'ubuntu-latest' }}
-        working-directory: ./build
-        run: sudo $(npx install-browser-deps)
-
       - name: Run tests
         run: yarn jest --testTimeout=60000 --maxWorkers=2
         working-directory: ./build

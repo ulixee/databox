@@ -9,12 +9,10 @@
   "dependencies": {
     "@ulixee/databox-interfaces": "1.5.4",
     "@ulixee/commons": "1.5.9",
-    "@ulixee/hero-interfaces": "1.5.4",
     "ws": "^7.4.6",
     "yargs-parser": "^20.2.9"
   },
   "devDependencies": {
-    "@ulixee/databox-testing": "1.5.4",
-    "@ulixee/hero": "1.5.4"
+    "@ulixee/databox-testing": "1.5.4"
   }
 }
